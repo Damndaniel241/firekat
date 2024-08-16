@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#app {
+  height: 100%;
+  @apply text-base cursor-default select-none;
+}
+
+button {
+  @apply cursor-default;
+}
+
+@layer components {
+  /* TODO: remove dependants*/
+  .btn {
+    @apply px-3 py-2 bg-black hover:bg-gray-800 active:bg-gray-600 text-white;
+  }
+}
