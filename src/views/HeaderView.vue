@@ -7,14 +7,14 @@ import Ads from '@/components/Ads.vue';
     <div
       class="bg-[#F6F6EC] shadow-lg border border-gray-300 p-2 rounded-lg flex flex-col justify-center items-center w-[70em] gap-1"
     >
-      <h1
+      <RouterLink :to="{name:'Index'}"
         class="text-[#175616] text-4xl font-bold capitalize hover:underline cursor-pointer"
       >
         Firekat forum
-      </h1>
+      </RouterLink>
       <div>
         Welcome, <span class="font-semibold">Guest: </span
-        ><RouterLink to="" class="text-[#181898] font-bold capitalize hover:underline"
+        ><RouterLink to="/" class="text-[#181882] font-bold capitalize hover:underline"
           >Register on Firekat</RouterLink
         >&nbsp;/&nbsp;<RouterLink to="" class="text-[#181870] hover:underline"
           >LOGIN! </RouterLink
