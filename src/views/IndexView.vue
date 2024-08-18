@@ -1,14 +1,12 @@
 <script setup lang="ts">
-import HeaderView from "@/views/HeaderView.vue";
-import FooterView from "@/views/FooterView.vue";
+
 import Ads from "@/components/Ads.vue";
 import { contents } from "@/Fakedb.ts";
 console.log(contents);
 </script>
 
 <template>
-  <div class="flex flex-col h-full justify-between my-3 gap-4">
-    <HeaderView />
+  
     <div
       class="first:border-t-0 last:border-b-0 odd:bg-[#e8ece0] rounded-lg bg-[#F6F6EC] border border-gray-300 w-[70em] flex flex-col place-self-center"
     >
@@ -118,6 +116,5 @@ console.log(contents);
       </div>
     </div>
     <Ads />
-    <FooterView />
-  </div>
+   
 </template>

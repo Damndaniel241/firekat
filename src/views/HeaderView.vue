@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import Ads from '@/components/Ads.vue';
+import { useAuthStore } from '@/stores/auth';
+
+const authStore = useAuthStore();
+const user = authStore.user;
+const login = authStore.login;
+const logout = authStore.logout;
 </script>
 
 <template>
@@ -16,7 +21,7 @@ import Ads from '@/components/Ads.vue';
         Welcome, <span class="font-semibold">Guest: </span
         ><RouterLink to="/" class="text-[#181882] font-bold capitalize hover:underline"
           >Register on Firekat</RouterLink
-        >&nbsp;/&nbsp;<RouterLink to="" class="text-[#181870] hover:underline"
+        >&nbsp;/&nbsp;<RouterLink :to="{name:'Login'}" class="text-[#181870] hover:underline"
           >LOGIN! </RouterLink
         >/ <RouterLink class="text-[#181870] hover:underline" to="">Trending </RouterLink>/
         <RouterLink class="text-[#181870] hover:underline" to="">Recent </RouterLink>/

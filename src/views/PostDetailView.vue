@@ -6,7 +6,7 @@ import { computed } from "vue";
 import postpic from "@/assets/files.png";
 import FooterView from "./FooterView.vue";
 import { contents } from "@/Fakedb";
-// import { Content } from "@/Fakedb.d.ts";
+
 
 
 interface Content {
@@ -28,8 +28,7 @@ console.log(data);
 </script>
 
 <template>
-  <div class="flex flex-col h-full justify-between my-3 gap-4">
-    <HeaderView />
+ 
     <Ads />
     <div
       class="flex flex-col rounded-lg border border-gray-300 shadow-lg w-[70em] place-self-center"
@@ -59,6 +58,5 @@ console.log(data);
       </div>
     </div>
     <Ads />
-    <FooterView />
-  </div>
+
 </template>

@@ -27,6 +27,25 @@ export const router = createRouter({
         name: "PostDetail",
         component: () => import("@/views/PostDetailView.vue"),
       },
+      {
+        path:"/firekat",
+        name: "General",
+        component: () => import("@/views/GeneralView.vue"),
+      },
+      {
+      path: "/-/login",
+      name: "Login",
+      component: () => import("@/views/LoginView.vue"),
+    },{
+      path: "/-/signup",
+      name: "Signup",
+      component: () => import("@/views/SignupView.vue"),
+    },
+    {
+      path: "/@:username",
+      name: "User",
+      component: () => import("@/views/UserView.vue"),
+    },
     {
       path: "/crime",
       name: "Crime",
