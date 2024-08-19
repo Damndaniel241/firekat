@@ -9,10 +9,12 @@ export const useAuthStore = defineStore('auth',{
         login(){
             this.isLoggedIn = true
             this.user = {name:'John Doe'}
+            console.log(this.isLoggedIn);
         },
         logout(){
             this.isLoggedIn = false
             this.user = null
+            console.log(this.isLoggedIn);
         },
     },
 })

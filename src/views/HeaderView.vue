@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { useAuthStore } from '@/stores/auth';
+import { useAuthStore } from "@/stores/auth";
+import { useAuth } from "@/composables/useAuth";
 
-const authStore = useAuthStore();
-const user = authStore.user;
-const login = authStore.login;
-const logout = authStore.logout;
+const { isLoggedIn, user, login, logout } = useAuth();
 </script>
 
 <template>
@@ -12,20 +10,36 @@ const logout = authStore.logout;
     <div
       class="bg-[#F6F6EC] shadow-lg border border-gray-300 p-2 rounded-lg flex flex-col justify-center items-center w-[70em] gap-1"
     >
-      <RouterLink :to="{name:'Index'}"
+      <RouterLink
+        :to="{ name: 'Index' }"
         class="text-[#175616] text-4xl font-bold capitalize hover:underline cursor-pointer"
       >
         Firekat forum
       </RouterLink>
       <div>
         Welcome, <span class="font-semibold">Guest: </span
-        ><RouterLink to="/" class="text-[#181882] font-bold capitalize hover:underline"
+        ><RouterLink
+          to="/"
+          class="text-[#181882] font-bold capitalize hover:underline"
           >Register on Firekat</RouterLink
-        >&nbsp;/&nbsp;<RouterLink :to="{name:'Login'}" class="text-[#181870] hover:underline"
+        >&nbsp;/&nbsp;<RouterLink
+          :to="{ name: 'Login' }"
+          class="text-[#181870] hover:underline"
           >LOGIN! </RouterLink
-        >/ <RouterLink class="text-[#181870] hover:underline" to="">Trending </RouterLink>/
-        <RouterLink class="text-[#181870] hover:underline" to="">Recent </RouterLink>/
-        <RouterLink class="text-[#181870] hover:underline" to="">New</RouterLink>
+        >/
+        <RouterLink class="text-[#181870] hover:underline" to=""
+          >Trending </RouterLink
+        >/
+        <RouterLink class="text-[#181870] hover:underline" to=""
+          >Recent </RouterLink
+        >/
+        <RouterLink class="text-[#181870] hover:underline" to=""
+          >New</RouterLink
+        >
+        <div v-if="!isLoggedIn">
+          logout
+        </div>
+        <div v-else>login</div>
       </div>
       <div>
         <span class="font-bold">Stats:</span> 3,183,615 members, 7,921,304
@@ -43,9 +57,6 @@ const logout = authStore.logout;
           Search
         </button>
       </div>
-     
     </div>
-    
-    
   </div>
 </template>
