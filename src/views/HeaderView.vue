@@ -2,7 +2,7 @@
 import { useAuthStore } from "@/stores/auth";
 import { useAuth } from "@/composables/useAuth";
 
-const { isLoggedIn, user, login, logout } = useAuth();
+// const { isLoggedIn, user, login, logout } = useAuth();
 </script>
 
 <template>
@@ -19,7 +19,7 @@ const { isLoggedIn, user, login, logout } = useAuth();
       <div>
         Welcome, <span class="font-semibold">Guest: </span
         ><RouterLink
-          to="/"
+          :to="{name:'Signup'}"
           class="text-[#181882] font-bold capitalize hover:underline"
           >Register on Firekat</RouterLink
         >&nbsp;/&nbsp;<RouterLink
@@ -36,10 +36,7 @@ const { isLoggedIn, user, login, logout } = useAuth();
         <RouterLink class="text-[#181870] hover:underline" to=""
           >New</RouterLink
         >
-        <div v-if="!isLoggedIn">
-          logout
-        </div>
-        <div v-else>login</div>
+       
       </div>
       <div>
         <span class="font-bold">Stats:</span> 3,183,615 members, 7,921,304

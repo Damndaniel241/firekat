@@ -1,6 +1,8 @@
 // src/composables/useAuth.ts
 
 import { ref } from 'vue'
+import { useRouter } from 'vue-router';
+const router = useRouter();
 
 export function useAuth() {
   // Simulate authentication state
@@ -13,6 +15,7 @@ export function useAuth() {
     user.value = { name: username }
     // You can add more user data here, like tokens, roles, etc.
     console.log(`User ${username} logged in`)
+    
   }
 
   // Simulate a logout action
