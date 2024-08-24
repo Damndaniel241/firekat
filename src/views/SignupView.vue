@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { ref,onBeforeMount, onMounted } from 'vue';
 import axios from 'axios';
+import { useRouter } from 'vue-router';
 
 const username = ref<string>("");
 const email = ref<string>("");
 const password = ref<string>("");
+  const router = useRouter();
 
 
 async function register(){
@@ -16,6 +18,7 @@ async function register(){
 
     try {
         const response = await axios.post("http://127.0.0.1:8000/accounts/register/", formData);
+        router.push({name:"Login"});
         return response.data;
     } catch (error) {
         console.error("An error occurred during registration:", error);

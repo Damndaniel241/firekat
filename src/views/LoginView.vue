@@ -1,13 +1,29 @@
 <script setup lang="ts">
-import { useAuthStore } from '@/stores/auth';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import axios from 'axios';
 
-// const authStore = useAuthStore();
-// const user = authStore.user;
-// const login = authStore.login;
-// const logout = authStore.logout;
-const {user,login,logout} = useAuthStore();
+const router = useRouter();
+const username = ref<string>("");
+const password = ref<string>("");
 
-console.log(login);
+async function login() {
+  const formData = {
+    username:username.value,
+    password:password.value
+  }
+
+  try{
+  const response = await axios.post("http://127.0.0.1:8000/accounts/login/",formData);
+  localStorage.setItem('user',JSON.stringify(response.data));
+  router.push({name:"Index"});
+  return response.data;
+ 
+}catch(error){
+  console.error("did not login",error);
+}
+}
+
 </script>
 
 <template>
@@ -21,12 +37,12 @@ console.log(login);
     <div class="bg-[#F6F6EC] p-2 flex justify-center gap-2 rounded-b-lg">
       <div class="flex items-center">
         <span>Username: </span>
-        <input type="text" class="p-1 rounded-xl bg-white border-gray-300" />
+        <input type="text" v-model="username" class="p-1 rounded-xl bg-white border-gray-300" />
       </div>
    
       <div class="flex items-center gap-2">
         <span>Password:</span>
-        <input type="password" class="p-1 rounded-lg" />
+        <input type="password" v-model="password" class="p-1 rounded-lg" />
         <button type="button" @click="login" class="rounded-xl bg-white text-center p-1 border-gray-300 px-2"> login</button>
       </div>
     </div>
