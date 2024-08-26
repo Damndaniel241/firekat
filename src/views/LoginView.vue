@@ -1,13 +1,24 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref,computed,watch } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
+import { useAuth } from '@/composables/useAuth';
+
 
 const router = useRouter();
 const username = ref<string>("");
 const password = ref<string>("");
 
-async function login() {
+const { isLoggedIn,login } = useAuth();
+
+watch(isLoggedIn,(newValue)=> {
+  if (!newValue){
+    router.push({name:"Index"});
+  }
+});
+
+
+async function loginUser() {
   const formData = {
     username:username.value,
     password:password.value
@@ -15,7 +26,9 @@ async function login() {
 
   try{
   const response = await axios.post("http://127.0.0.1:8000/accounts/login/",formData);
-  localStorage.setItem('user',JSON.stringify(response.data));
+  // localStorage.setItem('user',JSON.stringify(response.data));
+  login(response.data);
+  // isLoggedIn.value = true;
   router.push({name:"Index"});
   return response.data;
  
@@ -43,7 +56,7 @@ async function login() {
       <div class="flex items-center gap-2">
         <span>Password:</span>
         <input type="password" v-model="password" class="p-1 rounded-lg" />
-        <button type="button" @click="login" class="rounded-xl bg-white text-center p-1 border-gray-300 px-2"> login</button>
+        <button type="button" @click="loginUser" class="rounded-xl bg-white text-center p-1 border-gray-300 px-2 cursor-pointer"> login</button>
       </div>
     </div>
   </div>

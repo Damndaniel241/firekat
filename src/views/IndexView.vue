@@ -2,6 +2,12 @@
 
 import Ads from "@/components/Ads.vue";
 import { contents } from "@/Fakedb.ts";
+import { useAuth } from "@/composables/useAuth";
+
+const {isLoggedIn} = useAuth();
+
+console.log(isLoggedIn.value);
+
 console.log(contents);
 </script>
 
