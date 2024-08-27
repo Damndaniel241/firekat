@@ -3,37 +3,86 @@ import { useAuthStore } from "@/stores/auth";
 import { useAuth } from "@/composables/useAuth";
 import axios from "axios";
 import { useRouter } from "vue-router";
-import {watch,ref,onMounted,computed} from  "vue";
+import { watch, ref, onMounted, computed } from "vue";
+import { useUser } from "@/composables/useUser";
 
-
-;
 const router = useRouter();
+const userData = localStorage.getItem("user");
 
-const {isLoggedIn,logout} = useAuth();
-// const isUserLoggedIn = computed(() => isLoggedIn.value);
-// const userData = computed(() => getUserData());
+type Data = {
+  id:string,
+  username: string,
+  email:string
 
-// const isAuthenticated = ref(localStorage.getItem('user') !== null);
+}
 
-// watch(isLoggedIn,(newValue)=>{
-//   if (!newValue){
-//     router.push({name:"Index"});
-//   }
-// })
+const userInfo =  ref<Data| null>(null)
 
-
-async function logoutUser(){
-  try{
-  const response = await axios.post("http://127.0.0.1:8000/accounts/logout/");
-  // localStorage.removeItem('user');
-  // isLoggedIn.value = false; 
-  logout();
+async function getUserData() {
+    if (!userData) {
+      console.error("No user data found.");
+      return;
+    }
   
-  return
-  }catch(error){
-    console.error("error logging out",error)
+    const token = JSON.parse(userData).token;
+    try {
+      const response = await axios.get(
+        "http://127.0.0.1:8000/accounts/users/me/",
+        {
+          headers: { Authorization: `Token ${token}` },
+        }
+      );
+      console.log("User Details:", response.data);
+      return response.data;
+    } catch (error) {
+      console.error("error fetching userData", error);
+    }
   }
 
+  
+
+onMounted(async()=>{
+  const data = await getUserData();
+  if (data) {
+    userInfo.value = data;
+  }
+  
+  
+})
+
+console.log(userInfo);
+
+watch(userInfo, (newVal, oldVal) => {
+  console.log("userInfo changed:", newVal);
+});
+
+;
+
+const { isLoggedIn, logout } = useAuth();
+
+async function logoutUser() {
+  try {
+    if (!userData) {
+      throw new Error("No user data found in localStorage.");
+    }
+    const token = JSON.parse(userData).token;
+
+    const response = await axios.post(
+      "http://127.0.0.1:8000/accounts/logout/",
+      {},
+      {
+        headers: {
+          Authorization: `Token ${token}`, // Include the token in the Authorization header
+        },
+      }
+    );
+
+    logout();
+
+    return;
+  } catch (error) {
+    console.error("error logging out", error);
+  }
 }
 
 // const { isLoggedIn, user, login, logout } = useAuth();
@@ -50,10 +99,13 @@ async function logoutUser(){
       >
         Firekat forum
       </RouterLink>
-      <div>
+      <div v-if="isLoggedIn">
+        Welcome, <span class="font-semibold">{{ userInfo?.username }} </span>
+      </div>
+      <div v-else>
         Welcome, <span class="font-semibold">Guest: </span
         ><RouterLink
-          :to="{name:'Signup'}"
+          :to="{ name: 'Signup' }"
           class="text-[#181882] font-bold capitalize hover:underline"
           >Register on Firekat</RouterLink
         >&nbsp;/&nbsp;<RouterLink
@@ -70,15 +122,20 @@ async function logoutUser(){
         <RouterLink class="text-[#181870] hover:underline" to=""
           >New</RouterLink
         >
-
-        
-       
       </div>
+
       <div>
         <span class="font-bold">Stats:</span> 3,183,615 members, 7,921,304
         topics <span class="font-bold">Date: </span>Wednesday, 14 August 2024 at
         10:30 PM
-        <span v-if="isLoggedIn"><button @click="logoutUser" class="text-[#181870] hover:underline"> (logout)All</button></span>
+        <span v-if="isLoggedIn"
+          ><button
+            @click="logoutUser"
+            class="text-[#181870] hover:underline cursor-pointer"
+          >
+            (logout)All
+          </button></span
+        >
       </div>
       <div class="flex gap-2">
         <input

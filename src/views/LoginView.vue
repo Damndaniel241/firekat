@@ -27,6 +27,7 @@ async function loginUser() {
   try{
   const response = await axios.post("http://127.0.0.1:8000/accounts/login/",formData);
   // localStorage.setItem('user',JSON.stringify(response.data));
+  console.log(response.data);
   login(response.data);
   // isLoggedIn.value = true;
   router.push({name:"Index"});

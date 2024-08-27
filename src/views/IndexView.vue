@@ -8,7 +8,7 @@ const {isLoggedIn} = useAuth();
 
 console.log(isLoggedIn.value);
 
-console.log(contents);
+// console.log(contents);
 </script>
 
 <template>
