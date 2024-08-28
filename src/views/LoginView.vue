@@ -3,7 +3,9 @@ import { ref,computed,watch } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
 import { useAuth } from '@/composables/useAuth';
+import { useUser } from '@/composables/useUser';
 
+const {setUserData} = useUser();
 
 const router = useRouter();
 const username = ref<string>("");
@@ -26,10 +28,11 @@ async function loginUser() {
 
   try{
   const response = await axios.post("http://127.0.0.1:8000/accounts/login/",formData);
-  // localStorage.setItem('user',JSON.stringify(response.data));
+
   console.log(response.data);
   login(response.data);
-  // isLoggedIn.value = true;
+  
+  setUserData(response.data); 
   router.push({name:"Index"});
   return response.data;
  

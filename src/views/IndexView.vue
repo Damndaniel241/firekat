@@ -6,7 +6,7 @@ import { useAuth } from "@/composables/useAuth";
 
 const {isLoggedIn} = useAuth();
 
-console.log(isLoggedIn.value);
+// console.log(isLoggedIn.value);
 
 // console.log(contents);
 </script>

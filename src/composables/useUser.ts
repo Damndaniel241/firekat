@@ -1,19 +1,26 @@
 import axios
  from "axios";
- import { onMounted,ref } from "vue";
+ import { onMounted,ref,watch} from "vue";
 
 
-const userData = ref<any>(null);
+ const userData = localStorage.getItem("user");
 
-const storedData = localStorage.getItem("user");
+type Data = {
+  id:string,
+  username: string,
+  email:string
+
+}
+
+const userInfo =  ref<Data| null>(null)
 
 async function getUserData() {
-    if (!storedData) {
+    if (!userData) {
       console.error("No user data found.");
       return;
     }
   
-    const token = JSON.parse(storedData).token;
+    const token = JSON.parse(userData).token;
     try {
       const response = await axios.get(
         "http://127.0.0.1:8000/accounts/users/me/",
@@ -22,18 +29,38 @@ async function getUserData() {
         }
       );
       console.log("User Details:", response.data);
-      userData.value = response.data;
+      userInfo.value = response.data;
+      console.log(userInfo.value);
+      return response.data;
     } catch (error) {
       console.error("error fetching userData", error);
     }
   }
 
-export function useUser(){
+  getUserData();
 
-    onMounted(() => {
-        getUserData(); // Fetch user data when component is mounted
-    });
-   
-   return userData;
+// onMounted(async()=>{
+//   const data = await getUserData();
+//   if (data) {
+//     userInfo.value = data;
+//   }
+  
+  
+// })
 
-}
+
+
+export function useUser() {
+    // Function to set user info
+    function setUserData(data: Data | null) {
+      userInfo.value = data;
+    }
+    watch(userInfo, (newVal, oldVal) => {
+        console.log('userInfo changed:', newVal);
+      });
+    
+      return {
+        userInfo,
+        setUserData,
+      };
+    }
