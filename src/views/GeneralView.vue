@@ -42,14 +42,17 @@ console.log(generalTopics)
 function capitalize(name:string) {
   return name.charAt(0).toUpperCase() + name.slice(1)
 }
-// onMounted(()=>{
-//   const subjects = getSubjects();
-// })
 
 
-// const TopicList:Section = sections;
+function formatPostedAt(datetime:string) {
+      const date = new Date(datetime);
+      // const options = { hour: '2-digit', minute: '2-digit', hour12: true };
+      const options: Intl.DateTimeFormatOptions = { hour: '2-digit', minute: '2-digit', hour12: true };
+      const time = date.toLocaleTimeString('en-US', options);
+      const day = date.toLocaleString('en-US', { month: 'short', day: '2-digit' });
+      return `${time.toLowerCase()} On ${day}`;
 
-
+}
 </script>
 
 <template>
@@ -74,7 +77,7 @@ function capitalize(name:string) {
 </div>
 <Ads />
     <div class="odd:bg-[#e8ece0] flex justify-center  border border-gray-300  p-2" v-for="topic in generalTopics" :key="topic.id">
-     <RouterLink to=""  class="font-bold text-[#181882] hover:underline">{{topic.title }} </RouterLink>: 
+     <RouterLink to=""  class="font-bold text-[#181882] hover:underline">{{topic.title }} {{ formatPostedAt(topic.posted_at) }}</RouterLink>: 
     </div>
     
 <Ads />
