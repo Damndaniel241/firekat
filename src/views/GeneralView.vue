@@ -13,9 +13,9 @@ const generalTopics = ref<GeneralTopicSchema | []>([]);
 async function getSubjects(){
   try{
     const response = await axios.get("http://127.0.0.1:8000/api/faculties/1/subjects/");
-    console.log(response.data)
-    subjects.value = response.data
-    return response.data
+    console.log(response.data);
+    subjects.value = response.data;
+    return response.data;
   }catch(error){
     console.error("Error retrieving subjects",error);
   }
@@ -26,12 +26,17 @@ console.log(subjects);
 
 async function getGeneralTopics(){
   try{
-
+    const response = await axios.get("http://localhost:8000/api/faculties/1/topics/");
+    console.log(response.data);
+    generalTopics.value = response.data;
   }catch(error){
     console.error("Error retrieving subjects",error);
   }
 }
 
+
+getGeneralTopics();
+console.log(generalTopics)
 
 
 function capitalize(name:string) {
@@ -57,7 +62,7 @@ function capitalize(name:string) {
     <RouterLink  class="hover:underline text-[#181882]" :to="{name:'Index'}">Firekat forum</RouterLink>/
     <RouterLink  class="hover:underline text-[#181882]" :to="{name:'General'}">Firekat </RouterLink>
   </div>
-    <!-- <Ads /> -->
+   
     <div
       class="rounded-lg flex flex-col first:border-t-0 last:rounded-b-lg shadow-lg last:border-b-0 bg-[#F6F6EC] border border-gray-300 w-[70em] place-self-center"
     >
@@ -67,6 +72,11 @@ function capitalize(name:string) {
     
   
 </div>
+<Ads />
+    <div class="odd:bg-[#e8ece0] flex justify-center  border border-gray-300  p-2" v-for="topic in generalTopics" :key="topic.id">
+     <RouterLink to=""  class="font-bold text-[#181882] hover:underline">{{topic.title }} </RouterLink>: 
+    </div>
+    
 <Ads />
 
 </template>

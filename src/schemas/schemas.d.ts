@@ -7,12 +7,18 @@ export type Generalschema = [{
   }]
 
 export type GeneralTopicSchema = [{
-  name:string,
+  id:number,
   title:string,
-  posted_at:string,
-  subject:number,
-  author:string,
-  faculty:string,
+  slug:string,
+  subject:null,
+  author:{
+    email:string,
+    id:number,
+    username:string,
+  },
+  faculty:number,
+  content:string,
+  posted_at:string
 }]
 
 export type ScienceSchema = [{
