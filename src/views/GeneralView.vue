@@ -1,26 +1,72 @@
 <script setup lang="ts">
+import axios from "axios";
+import { onMounted,ref } from "vue";
+
+// import {sections} from "@/Topicsdb.ts";
+
+import { Generalschema,GeneralTopicSchema } from "@/schemas/schemas";
 
 
-import {sections} from "@/Topicsdb.ts";
+const subjects = ref<Generalschema | []>([]);
+const generalTopics = ref<GeneralTopicSchema | []>([]);
+
+async function getSubjects(){
+  try{
+    const response = await axios.get("http://127.0.0.1:8000/api/faculties/1/subjects/");
+    console.log(response.data)
+    subjects.value = response.data
+    return response.data
+  }catch(error){
+    console.error("Error retrieving subjects",error);
+  }
+}
+
+getSubjects();
+console.log(subjects);
+
+async function getGeneralTopics(){
+  try{
+
+  }catch(error){
+    console.error("Error retrieving subjects",error);
+  }
+}
+
+
+
+function capitalize(name:string) {
+  return name.charAt(0).toUpperCase() + name.slice(1)
+}
+// onMounted(()=>{
+//   const subjects = getSubjects();
+// })
 
 
 // const TopicList:Section = sections;
 
-console.log(sections)
+
 </script>
 
 <template>
-  <!-- <div class="h-full flex flex-col justify-between my-3 gap-4"> -->
+  
    
-    <Ads />
+  <div class="text-center text-3xl font-bold">
+    Firekat/General - Firekat
+  </div>
+  <div class="flex gap-1 place-self-center text-lg font-medium">
+    <RouterLink  class="hover:underline text-[#181882]" :to="{name:'Index'}">Firekat forum</RouterLink>/
+    <RouterLink  class="hover:underline text-[#181882]" :to="{name:'General'}">Firekat </RouterLink>
+  </div>
+    <!-- <Ads /> -->
     <div
       class="rounded-lg flex flex-col first:border-t-0 last:rounded-b-lg shadow-lg last:border-b-0 bg-[#F6F6EC] border border-gray-300 w-[70em] place-self-center"
     >
-    <div class="odd:bg-[#e8ece0] flex justify-center  border border-gray-300  p-2" v-for="section in sections" :key="section.title">
-     <RouterLink to="" class="font-bold text-[#181882]">{{ section.title }} </RouterLink>: {{ section.description }} ({{ section.no_of_topics }}) topics
+    <div class="odd:bg-[#e8ece0] flex justify-center  border border-gray-300  p-2" v-for="subject in subjects" :key="subject.id">
+     <RouterLink :to="{name:capitalize(subject.name)}"  class="font-bold text-[#181882] hover:underline">{{ subject.name }} </RouterLink>: {{ subject.description }} (200) topics
     </div>
-
-</div>
     
-  <!-- </div> -->
+  
+</div>
+<Ads />
+
 </template>

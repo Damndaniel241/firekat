@@ -25,60 +25,60 @@ const {isLoggedIn} = useAuth();
       <div
         class="odd:bg-[#daf89f] p-2 font-bold border-gray-300 border place-content-start"
       >
-        <RouterLink to="" class="text-[#181882]"> Firekat/General: </RouterLink>
-        <RouterLink to="" class="text-[#181882]"> Politics, </RouterLink>
-        <RouterLink to="" class="text-[#181882]"> Crime, </RouterLink>
-        <RouterLink to="" class="text-[#181882]"> Romance, </RouterLink>
-        <RouterLink to="" class="text-[#181882]"> Jobs/Vacancies, </RouterLink>
-        <RouterLink to="" class="text-[#181882]"> Career, </RouterLink>
-        <RouterLink to="" class="text-[#181882]"> Business, </RouterLink>
-        <RouterLink to="" class="text-[#181882]"> Investment, </RouterLink>
-        <RouterLink to="" class="text-[#181882]"> NYSC, </RouterLink>
-        <RouterLink to="" class="text-[#181882]"> Education, </RouterLink>
-        <RouterLink to="" class="text-[#181882]"> Autos, </RouterLink>
-        <RouterLink to="" class="text-[#181882]"> Car Talk, </RouterLink>
-        <RouterLink to="" class="text-[#181882]"> Properties, </RouterLink>
-        <RouterLink to="" class="text-[#181882]"> Health, </RouterLink>
-        <RouterLink to="" class="text-[#181882]"> Travel, </RouterLink>
-        <RouterLink to="" class="text-[#181882]"> Family, </RouterLink>
-        <RouterLink to="" class="text-[#181882]"> Culture, </RouterLink>
-        <RouterLink to="" class="text-[#181882]"> Religion, </RouterLink>
-        <RouterLink to="" class="text-[#181882]"> Food, </RouterLink>
-        <RouterLink to="" class="text-[#181882]"> Diaries, </RouterLink>
-        <RouterLink to="" class="text-[#181882]"> Nairaland Ads, </RouterLink>
-        <RouterLink to="" class="text-[#181882]"> Pets, </RouterLink>
-        <RouterLink to="" class="text-[#181882]"> Agriculture </RouterLink>
+        <RouterLink :to="{name:'General'}" class="text-[#181882] hover:underline"> Firekat/General: </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline"> Politics, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline"> Crime, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline"> Romance, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline"> Jobs/Vacancies, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline"> Career, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline"> Business, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline"> Investment, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline"> NYSC, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline"> Education, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline"> Autos, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline"> Car Talk, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline"> Properties, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline"> Health, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline"> Travel, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline"> Family, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline"> Culture, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline"> Religion, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline"> Food, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline"> Diaries, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline"> Nairaland Ads, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline"> Pets, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline"> Agriculture </RouterLink>
       </div>
 
       <div
         class="odd:bg-[#e8ece0] place-content-start font-bold border border-gray-300 p-2"
       >
-        <RouterLink to="" class="text-[#181882]">Entertainment:</RouterLink>
-        <RouterLink to="" class="text-[#181882]">Jokes Etc, </RouterLink>
-        <RouterLink to="" class="text-[#181882]">TV/Movies, </RouterLink>
-        <RouterLink to="" class="text-[#181882]">Music/Radio, </RouterLink>
-        <RouterLink to="" class="text-[#181882]">Celebrities, </RouterLink>
-        <RouterLink to="" class="text-[#181882]">Fashion, </RouterLink>
-        <RouterLink to="" class="text-[#181882]">Events, </RouterLink>
-        <RouterLink to="" class="text-[#181882]">Sports, </RouterLink>
-        <RouterLink to="" class="text-[#181882]">Gaming, </RouterLink>
-        <RouterLink to="" class="text-[#181882]">Forum Games, </RouterLink>
-        <RouterLink to="" class="text-[#181882]">Literature </RouterLink>
+        <RouterLink :to="{name:'Entertainment'}"  class="text-[#181882] hover:underline">Entertainment:</RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline">Jokes Etc, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline">TV/Movies, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline">Music/Radio, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline">Celebrities, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline">Fashion, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline">Events, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline">Sports, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline">Gaming, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline">Forum Games, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline">Literature </RouterLink>
       </div>
 
       <div
         class="odd:bg-[#e8ece0] place-content-start border-t rounded-b-lg border-t-gray-300 font-bold p-2"
       >
-        <RouterLink to="" class="text-[#181882]"
+        <RouterLink :to="{name:'Science'}"  class="text-[#181882] hover:underline"
           >Science/Technology:
         </RouterLink>
-        <RouterLink to="" class="text-[#181882]">Programming, </RouterLink>
-        <RouterLink to="" class="text-[#181882]">Webmasters, </RouterLink>
-        <RouterLink to="" class="text-[#181882]">Computers, </RouterLink>
-        <RouterLink to="" class="text-[#181882]">Phones, </RouterLink>
-        <RouterLink to="" class="text-[#181882]">Art, </RouterLink>
-        <RouterLink to="" class="text-[#181882]">Graphics & Video, </RouterLink>
-        <RouterLink to="" class="text-[#181882]">Technology Market</RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline">Programming, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline">Webmasters, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline">Computers, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline">Phones, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline">Art, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline">Graphics & Video, </RouterLink>
+        <RouterLink to="" class="text-[#181882] hover:underline">Technology Market</RouterLink>
       </div>
     </div>
     <Ads />
