@@ -3,12 +3,15 @@ import { useAuthStore } from "@/stores/auth";
 import { useAuth } from "@/composables/useAuth";
 import axios from "axios";
 import { useRouter } from "vue-router";
-import { watch, ref, onMounted, computed } from "vue";
+import { watch, ref, onMounted, computed, onBeforeMount, onUpdated } from "vue";
 import { useUser } from "@/composables/useUser";
 
 const router = useRouter();
 const userData = localStorage.getItem("user");
 const { userInfo } = useUser();
+const userCount = ref<number | null>(null);
+const topicCount = ref<number | null>(null);
+
 
 // type Data = {
 //   id:string,
@@ -54,6 +57,7 @@ const { userInfo } = useUser();
 //   console.log("userInfo changed:", newVal);
 // });
 
+
 watch(userInfo, (newVal, oldVal) => {
   if (newVal) {
     console.log("User info updated:", newVal);
@@ -61,7 +65,11 @@ watch(userInfo, (newVal, oldVal) => {
   }
 });
 
+
+
 const { isLoggedIn, logout } = useAuth();
+
+
 
 async function logoutUser() {
   try {
@@ -88,6 +96,31 @@ async function logoutUser() {
   }
 }
 
+async function getMemberCount(){
+  try{
+    const response = await axios.get("http://127.0.0.1:8000/accounts/users/all/");
+    console.log(response.data);
+    userCount.value =  response.data;
+    return response.data
+  }
+  catch(error){
+    console.error("error getting count", error);
+  }
+}
+async function getTopicCount(){
+  try{
+    const response = await axios.get("http://127.0.0.1:8000/api/topics/all/");
+    console.log(response.data);
+    topicCount.value =  response.data;
+    return response.data
+  }
+  catch(error){
+    console.error("error getting count", error);
+  }
+}
+
+getMemberCount();
+getTopicCount();
 // const { isLoggedIn, user, login, logout } = useAuth();
 </script>
 
@@ -145,7 +178,7 @@ async function logoutUser() {
       </div>
 
       <div>
-        <span class="font-bold">Stats:</span> 3,183,615 members, 7,921,304
+        <span class="font-bold">Stats:</span> {{ userCount }} members, {{ topicCount }}
         topics <span class="font-bold">Date: </span>Wednesday, 14 August 2024 at
         10:30 PM
         <span v-if="isLoggedIn"

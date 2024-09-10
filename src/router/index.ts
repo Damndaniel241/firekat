@@ -23,14 +23,20 @@ export const router = createRouter({
       component: () => import("@/views/FooterView.vue"),
     },
     {
-        path: "/:postId",
+        path: "/:topicId/:topicSlug",
         name: "PostDetail",
         component: () => import("@/views/PostDetailView.vue"),
+        props:true
       },
       {
         path:"/-/firekat",
         name: "General",
         component: () => import("@/views/GeneralView.vue"),
+      },
+      {
+        path:"/-/new-topic",
+        name: "PostTopic",
+        component: () => import("@/views/PostTopicView.vue"),
       },
       {
       path: "/-/login",

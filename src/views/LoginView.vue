@@ -7,6 +7,10 @@ import { useUser } from '@/composables/useUser';
 
 const {setUserData} = useUser();
 
+const error = ref<boolean>(false);
+
+console.log(error.value);
+
 const router = useRouter();
 const username = ref<string>("");
 const password = ref<string>("");
@@ -21,6 +25,8 @@ watch(isLoggedIn,(newValue)=> {
 
 
 async function loginUser() {
+
+  
   const formData = {
     username:username.value,
     password:password.value
@@ -36,7 +42,10 @@ async function loginUser() {
   router.push({name:"Index"});
   return response.data;
  
-}catch(error){
+}catch(errors){
+  error.value = true;
+  
+  setTimeout(()=>{error.value=false;},5000)
   console.error("did not login",error);
 }
 }
@@ -48,6 +57,10 @@ async function loginUser() {
   <div
     class="bg-[#e8ece0] rounded-lg w-[70em] place-self-center flex flex-col border-gray-300 shadow-lg"
   >
+
+  <div v-if="error" class="text-red-500 text-2xl text-center">
+    wrong username or password
+  </div>
     <div class="bg-[#e8ece0] p-2 text-center rounded-t-lg text-xl font-semibold">
       Login With Password
     </div>

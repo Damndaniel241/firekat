@@ -3,12 +3,39 @@
 import Ads from "@/components/Ads.vue";
 import { contents } from "@/Fakedb.ts";
 import { useAuth } from "@/composables/useAuth";
+import { onBeforeMount,onMounted,ref } from "vue";
+import axios from "axios";
+import { allTopicsSchema } from "@/schemas/schemas";
 
-const {isLoggedIn} = useAuth();
+
+const allTopics = ref<allTopicsSchema | []>([]);
+  const { isLoggedIn } = useAuth();
+  // rest of your code here
+
+function slugify(str:string) {
+  return str.toLowerCase()
+    .replace(/[^a-z0-9\s]/gi, '') // Remove non-alphanumeric characters
+    .replace(/\s+/g, '-'); // Replace spaces with hyphens
+}
+
+async function getallTopics() {
+  try {
+    const response = await axios.get(
+      "http://localhost:8000/api/topics/"
+    );
+    console.log(response.data);
+    allTopics.value = response.data;
+  } catch (error) {
+    console.error("Error retrieving subjects", error);
+  }
+}
+
+
+getallTopics();
 
 // console.log(isLoggedIn.value);
 
-// console.log(contents);
+console.log(contents);
 </script>
 
 <template>
@@ -98,14 +125,14 @@ const {isLoggedIn} = useAuth();
         >
       </div>
       <div
-        v-for="content in contents"
-        key="content.id"
+        v-for="topic in allTopics"
+        :key="topic.id"
         class="odd:bg-[#e8ece0] border border-gray-300 flex justify-center items-center p-2"
       >
         <!-- {{ content.title }} -->
         <span class="text-[#984948]">»</span
-        ><RouterLink :to="{name:'PostDetail',params:{postId:content.id}}" class="text-[#181882] font-bold mx-1">{{
-          content.title
+        ><RouterLink :to="{name:'PostDetail',params:{topicId:topic.id,topicSlug:topic.slug}}" class="text-[#181882] font-bold mx-1 hover:underline">{{
+          topic.title
         }}</RouterLink
         ><span class="text-[#984948]">«</span>
       </div>

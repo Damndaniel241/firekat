@@ -1,6 +1,7 @@
 import axios
  from "axios";
  import { onMounted,ref,watch} from "vue";
+ import { userSchema } from "@/schemas/schemas";
 
 
  const userData = localStorage.getItem("user");
@@ -12,7 +13,7 @@ type Data = {
 
 }
 
-const userInfo =  ref<Data| null>(null)
+const userInfo =  ref<userSchema| null>(null)
 
 async function getUserData() {
     if (!userData) {
@@ -52,7 +53,7 @@ async function getUserData() {
 
 export function useUser() {
     // Function to set user info
-    function setUserData(data: Data | null) {
+    function setUserData(data: userSchema | null) {
       userInfo.value = data;
     }
     watch(userInfo, (newVal, oldVal) => {
