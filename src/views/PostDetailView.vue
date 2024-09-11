@@ -101,7 +101,7 @@ function goToNewPost(topicId:number, commentId:number) {
         {{ topicData?.title }}
       </RouterLink>
       by
-      <RouterLink to="" class="text-[#551818] font-bold">
+      <RouterLink to="" class="text-[#551818] font-bold hover:underline">
         {{ topicData?.author.username }} </RouterLink
       >:
       <span class="text-[#555518] font-semibold">{{
@@ -124,7 +124,7 @@ function goToNewPost(topicId:number, commentId:number) {
     <div class="bg-[#E8ECE0] p-2 border-b-gray-300 border-b border-t-rounded-lg">
       <RouterLink to="" class="text-[#181882] font-bold hover:underline">
         RE: {{ topicData?.title }} </RouterLink> by
-        <RouterLink to="" class="text-[#551818] font-bold">
+        <RouterLink to="" class="text-[#551818] font-bold hover:underline">
           {{ comment.user.username }} 
         </RouterLink>: 
         <span class="text-[#555518] font-semibold">{{

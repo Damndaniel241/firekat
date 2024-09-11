@@ -41,22 +41,23 @@ export type TopicSchema = {
   posted_at: string;
 };
 
-export type allTopicsSchema = [{
-  id: number;
-  title: string;
-  slug: string;
-  subject: null;
-  comment_count: number;
-  author: {
-    email: string;
+export type allTopicsSchema = [
+  {
     id: number;
-    username: string;
-  };
-  faculty: number;
-  content: string;
-  posted_at: string;
-}];
-
+    title: string;
+    slug: string;
+    subject: null;
+    comment_count: number;
+    author: {
+      email: string;
+      id: number;
+      username: string;
+    };
+    faculty: number;
+    content: string;
+    posted_at: string;
+  }
+];
 
 export type ScienceSchema = [
   {
@@ -92,8 +93,20 @@ export type TopicscommentSchema = [
       email: string;
     };
     topic: number;
-    posted_at:string;
-    quoted_comment: string | null;
+    posted_at: string;
+    quoted_comment: {
+      content: string;
+      id: number;
+      posted_at: string;
+      quoted_comment: null;
+      quoted_topic: number;
+      topic: number;
+      user: {
+        id: number;
+        username: string;
+        email: string;
+      };
+    } | null;
     quoted_topic: string | null;
   }
 ];

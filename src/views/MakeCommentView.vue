@@ -133,6 +133,7 @@ async function postReplyToComment() {
 <template>
   <div class="place-self-center w-[70em] bg-[#E8ECE0] rounded-lg p-3">
     <div v-if="Topic && Topic.content">
+    <!-- <p class="text-[#181882] font-bold">{{ Topic.author.username }}:</p> -->
       {{ Topic?.content }}
     </div>
     <div v-else-if="topicData && topicData.content">
@@ -149,7 +150,7 @@ async function postReplyToComment() {
       @click="postReplyToComment"
       class="bg-white rounded-2xl p-2 mt-1 cursor-pointer"
     >
-      reply - user {{ userInfo?.id }}
+      reply 
     </button>
     <button
       type="button"
@@ -157,7 +158,7 @@ async function postReplyToComment() {
       @click="postReplyToTopic"
       class="bg-white rounded-2xl p-2 mt-1 cursor-pointer"
     >
-      reply - user {{ userInfo?.id }}
+      reply 
     </button>
   </div>
   <!-- <p>Topic ID: {{ topicId }}</p>
