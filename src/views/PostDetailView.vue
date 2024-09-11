@@ -8,9 +8,11 @@ import FooterView from "./FooterView.vue";
 import { contents } from "@/Fakedb";
 import axios from "axios";
 import { TopicSchema, TopicscommentSchema } from "@/schemas/schemas";
+import { useAuth } from "@/composables/useAuth";
 
 const topicData = ref<TopicSchema | null>(null);
 const commentsList = ref<TopicscommentSchema | []>([]);
+const { isLoggedIn} = useAuth();
 
 const route = useRoute();
 const router = useRouter();
@@ -63,7 +65,7 @@ function formatPostedAt(datetime: string) {
     hour12: true,
   };
   const time = date.toLocaleTimeString("en-US", options);
-  const day = date.toLocaleString("en-US", { month: "short", day: "2-digit" });
+  const day = date.toLocaleString("en-US", { month: "short", day: "2-digit", year:"numeric" });
   return `${time.toLowerCase()} On ${day}`;
 }
 
@@ -72,9 +74,19 @@ function formatPostedAt(datetime: string) {
 // console.log(data);
 
 // const postId = route.params.postId
+
+
+function goToNewPost(topicId:number, commentId:number) {
+  router.push({ 
+    path: '/-/makecomment', 
+    query: { topic: topicId, post: commentId }
+  });
+}
 </script>
 
 <template>
+  
+  <div v-if="topicData" class="text-center text-2xl capitalize font-bold">{{ topicData.title }} - Firekat</div>
   <Ads />
   <div
     class="flex flex-col rounded-lg border border-gray-300 shadow-lg w-[70em] place-self-center"
@@ -82,7 +94,7 @@ function formatPostedAt(datetime: string) {
     <div class="bg-[#E8ECE0] p-2 border-b-gray-300 border-b rounded-t-lg">
       <RouterLink
         :to="{ name: 'PostDetail', params: { topicId: topicId } }"
-        class="text-[#181882] font-bold"
+        class="text-[#181882] font-bold hover:underline"
         v-if="topicData"
       >
         <!-- {{data[0]?.title}} -->
@@ -101,7 +113,8 @@ function formatPostedAt(datetime: string) {
       <p>
         {{ topicData?.content }}
       </p>
-      <p></p>
+
+      <button v-if="topicData && isLoggedIn" class="text-[#181882] cursor-pointer hover:underline" @click="goToNewPost(topicData?.id , 1)">(quote)</button>
     </div>
   </div>
   <div
@@ -109,24 +122,29 @@ function formatPostedAt(datetime: string) {
     v-for="comment in commentsList"
   >
     <div class="bg-[#E8ECE0] p-2 border-b-gray-300 border-b border-t-rounded-lg">
-      <RouterLink to="" class="text-[#181882] font-bold">
-        RE: {{ topicData?.title }} by
+      <RouterLink to="" class="text-[#181882] font-bold hover:underline">
+        RE: {{ topicData?.title }} </RouterLink> by
         <RouterLink to="" class="text-[#551818] font-bold">
           {{ comment.user.username }} 
         </RouterLink>: 
         <span class="text-[#555518] font-semibold">{{
           formatPostedAt(comment?.posted_at)
         }}</span>
-      </RouterLink>
+      
     </div>
     <div class="bg-[#F6F6EC] p-1">
       <!-- <img :src="postpic" alt="postpic" class="w-[400px] h-[400px] p-4" /> -->
+       <p v-if="comment.quoted_comment" class="bg-[#E8ECE0] rounded-lg p-1">
+        <p class="text-[#181882] font-bold">{{ comment.quoted_comment.user.username  }}:</p>
+        {{ comment.quoted_comment.content }} </p>
       <p>
         {{ comment?.content }}
       </p>
+      
+      <button v-if="topicData && isLoggedIn" class="text-[#181882] cursor-pointer hover:underline" @click="goToNewPost(topicData?.id , comment.id)">(quote)</button>
     </div>
   </div>
-  <div></div>
-
+  
+ 
   <Ads />
 </template>

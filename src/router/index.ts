@@ -39,6 +39,14 @@ export const router = createRouter({
         component: () => import("@/views/PostTopicView.vue"),
       },
       {
+        // path: "/-/newpost?topic=:topicId&post=:commentId",
+        // path: "/-/:topicId/:commentId",
+        path: "/-/makecomment",
+        name: "MakeComment",
+        component: () => import("@/views/MakeCommentView.vue"),
+        props: route => ({ topicId: route.query.topic, commentId: route.query.post }),
+      },
+      {
       path: "/-/login",
       name: "Login",
       component: () => import("@/views/LoginView.vue"),

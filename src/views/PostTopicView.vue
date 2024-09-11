@@ -15,6 +15,7 @@ const userData = localStorage.getItem("user");
 const title= ref("");
 const content = ref("");
 console.log(userInfo.value);
+
 async function postTopic(){
     const currentDateTime = new Date().toISOString();
     
