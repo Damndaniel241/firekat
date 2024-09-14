@@ -2,6 +2,8 @@
 import axios from "axios";
 import { onBeforeMount, onMounted, ref } from "vue";
 import { useAuth } from '@/composables/useAuth';
+import { formatPostedAt } from "@/utils/Dateutils";
+import { capitalize } from "@/utils/Capitalize";
 
 
 
@@ -53,22 +55,20 @@ console.log(generalTopics);
 
 
 
-function capitalize(name: string) {
-  return name.charAt(0).toUpperCase() + name.slice(1);
-}
 
-function formatPostedAt(datetime: string) {
-  const date = new Date(datetime);
-  // const options = { hour: '2-digit', minute: '2-digit', hour12: true };
-  const options: Intl.DateTimeFormatOptions = {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true,
-  };
-  const time = date.toLocaleTimeString("en-US", options);
-  const day = date.toLocaleString("en-US", { month: "short", day: "2-digit" });
-  return `${time.toLowerCase()} On ${day}`;
-}
+
+// function formatPostedAt(datetime: string) {
+//   const date = new Date(datetime);
+//   // const options = { hour: '2-digit', minute: '2-digit', hour12: true };
+//   const options: Intl.DateTimeFormatOptions = {
+//     hour: "2-digit",
+//     minute: "2-digit",
+//     hour12: true,
+//   };
+//   const time = date.toLocaleTimeString("en-US", options);
+//   const day = date.toLocaleString("en-US", { month: "short", day: "2-digit" });
+//   return `${time.toLowerCase()} On ${day}`;
+// }
 </script>
 
 <template>

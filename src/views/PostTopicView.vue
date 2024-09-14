@@ -3,18 +3,20 @@ import { ref } from 'vue';
 import { useUser } from '@/composables/useUser';
 import { userSchema } from '@/schemas/schemas';
 import axios from 'axios';
+import { useRouter,useRoute } from 'vue-router';
 
 
 
 
 
-
-
+const router = useRouter();
+const route = useRoute();
 const {userInfo} = useUser();
 const userData = localStorage.getItem("user");
 const title= ref("");
 const content = ref("");
 console.log(userInfo.value);
+const facultyID = route.query.faculty;
 
 async function postTopic(){
     const currentDateTime = new Date().toISOString();
@@ -26,7 +28,7 @@ async function postTopic(){
         content:content.value,
         posted_at:currentDateTime,
         author: userInfo.value?.id,
-        faculty:1,
+        faculty:facultyID,
     }
     try{
         if (!userData) {
@@ -40,6 +42,7 @@ async function postTopic(){
         },
       }
     )
+    router.go(-1);
     }
     catch (error){
         console.error("error posting topic",error)

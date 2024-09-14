@@ -3,7 +3,7 @@ import { useAuthStore } from "@/stores/auth";
 import { useAuth } from "@/composables/useAuth";
 import axios from "axios";
 import { useRouter } from "vue-router";
-import { watch, ref, onMounted, computed, onBeforeMount, onUpdated } from "vue";
+import { watch, ref, onMounted, computed, onBeforeMount, onUpdated , nextTick} from "vue";
 import { useUser } from "@/composables/useUser";
 
 const router = useRouter();
@@ -11,6 +11,7 @@ const userData = localStorage.getItem("user");
 const { userInfo } = useUser();
 const userCount = ref<number | null>(null);
 const topicCount = ref<number | null>(null);
+
 
 
 // type Data = {

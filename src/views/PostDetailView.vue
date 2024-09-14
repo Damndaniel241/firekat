@@ -9,6 +9,7 @@ import { contents } from "@/Fakedb";
 import axios from "axios";
 import { TopicSchema, TopicscommentSchema } from "@/schemas/schemas";
 import { useAuth } from "@/composables/useAuth";
+import { formatPostedAt } from "@/utils/Dateutils";
 
 const topicData = ref<TopicSchema | null>(null);
 const commentsList = ref<TopicscommentSchema | []>([]);
@@ -56,18 +57,6 @@ getComments();
 
 console.log(topicData);
 
-function formatPostedAt(datetime: string) {
-  const date = new Date(datetime);
-  // const options = { hour: '2-digit', minute: '2-digit', hour12: true };
-  const options: Intl.DateTimeFormatOptions = {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true,
-  };
-  const time = date.toLocaleTimeString("en-US", options);
-  const day = date.toLocaleString("en-US", { month: "short", day: "2-digit", year:"numeric" });
-  return `${time.toLowerCase()} On ${day}`;
-}
 
 // const data = computed(()=>contents.filter((value)=>postId.value===value.id))
 
@@ -75,6 +64,14 @@ function formatPostedAt(datetime: string) {
 
 // const postId = route.params.postId
 
+function goToUser(userId:number,username:string) {
+  router.push({ 
+    // path: '/-/makecomment', 
+    name:'User',
+    params:{username:username},
+    state: { userId }
+  });
+}
 
 function goToNewPost(topicId:number, commentId:number) {
   router.push({ 
@@ -101,9 +98,10 @@ function goToNewPost(topicId:number, commentId:number) {
         {{ topicData?.title }}
       </RouterLink>
       by
-      <RouterLink to="" class="text-[#551818] font-bold hover:underline">
+      <!-- <RouterLink v-if="topicData" :to="{name:'User',params:{username:topicData?.author.username}}" class="text-[#551818] font-bold hover:underline">
         {{ topicData?.author.username }} </RouterLink
-      >:
+      >: -->
+      <button @click="goToUser(topicData.author.id,topicData.author.username)" v-if="topicData" class="text-[#551818] font-bold hover:underline">{{ topicData?.author.username }}</button>
       <span class="text-[#555518] font-semibold">{{
         formatPostedAt(topicData?.posted_at ?? '')
       }}</span>
@@ -124,7 +122,7 @@ function goToNewPost(topicId:number, commentId:number) {
     <div class="bg-[#E8ECE0] p-2 border-b-gray-300 border-b border-t-rounded-lg">
       <RouterLink to="" class="text-[#181882] font-bold hover:underline">
         RE: {{ topicData?.title }} </RouterLink> by
-        <RouterLink to="" class="text-[#551818] font-bold hover:underline">
+        <RouterLink :to="{name:'User',params:{username:comment.user.username}}" class="text-[#551818] font-bold hover:underline">
           {{ comment.user.username }} 
         </RouterLink>: 
         <span class="text-[#555518] font-semibold">{{
@@ -148,3 +146,6 @@ function goToNewPost(topicId:number, commentId:number) {
  
   <Ads />
 </template>
+
+
+<!-- MWJDGMSP -->

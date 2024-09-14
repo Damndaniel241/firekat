@@ -37,6 +37,7 @@ export const router = createRouter({
         path:"/-/new-topic",
         name: "PostTopic",
         component: () => import("@/views/PostTopicView.vue"),
+        props: route => ({ facultyId: route.query.faculty }),
       },
       {
         // path: "/-/newpost?topic=:topicId&post=:commentId",
@@ -59,6 +60,8 @@ export const router = createRouter({
       path: "/@:username",
       name: "User",
       component: () => import("@/views/UserView.vue"),
+      meta: { requiresAuth: true },
+      // props: route => ({userId:route.query.user}),
     },
     {
       path: "/-/science",
