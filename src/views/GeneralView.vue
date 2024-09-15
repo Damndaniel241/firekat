@@ -4,12 +4,14 @@ import { onBeforeMount, onMounted, ref } from "vue";
 import { useAuth } from '@/composables/useAuth';
 import { formatPostedAt } from "@/utils/Dateutils";
 import { capitalize } from "@/utils/Capitalize";
+import { useRouter } from "vue-router";
+import {goToNewPost} from "@/utils/linktopost";
 
 
 
 const { isLoggedIn, logout } = useAuth();
 
-
+const router = useRouter();
 
 // import {sections} from "@/Topicsdb.ts";
 
@@ -53,22 +55,19 @@ getSubjects();
 
 console.log(generalTopics);
 
-
-
-
-
-// function formatPostedAt(datetime: string) {
-//   const date = new Date(datetime);
-//   // const options = { hour: '2-digit', minute: '2-digit', hour12: true };
-//   const options: Intl.DateTimeFormatOptions = {
-//     hour: "2-digit",
-//     minute: "2-digit",
-//     hour12: true,
-//   };
-//   const time = date.toLocaleTimeString("en-US", options);
-//   const day = date.toLocaleString("en-US", { month: "short", day: "2-digit" });
-//   return `${time.toLowerCase()} On ${day}`;
+// function goToNewPost(facultyId:number|null,subjectId:number|null){
+//   router.push({ 
+//     // path: '/-/makecomment', 
+//     name:'PostTopic',
+//     query:{faculty:facultyId,subject:subjectId},
+  
+//   });
 // }
+
+
+
+
+
 </script>
 
 <template>
@@ -101,7 +100,7 @@ console.log(generalTopics);
     </div>
   </div>
   <Ads />
-  <div class="place-self-center "><RouterLink v-if="isLoggedIn" class="hover:underline text-[#181882] font-medium" :to="{name:'PostTopic'}">(create new topic)</RouterLink>
+  <div class="place-self-center "><button v-if="isLoggedIn" class="hover:underline text-[#181882] font-medium" @click="goToNewPost(router,1,null)" >(create new topic)</button>
     <RouterLink v-else class="hover:underline text-[#181882] font-medium" :to="{name:'Login'}">(create new topic)</RouterLink>
   </div>
   <div

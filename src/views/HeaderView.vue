@@ -14,54 +14,12 @@ const topicCount = ref<number | null>(null);
 
 
 
-// type Data = {
-//   id:string,
-//   username: string,
-//   email:string
-
-// }
-
-// const userInfo =  ref<Data| null>(null)
-
-// async function getUserData() {
-//     if (!userData) {
-//       console.error("No user data found.");
-//       return;
-//     }
-
-//     const token = JSON.parse(userData).token;
-//     try {
-//       const response = await axios.get(
-//         "http://127.0.0.1:8000/accounts/users/me/",
-//         {
-//           headers: { Authorization: `Token ${token}` },
-//         }
-//       );
-//       console.log("User Details:", response.data);
-//       return response.data;
-//     } catch (error) {
-//       console.error("error fetching userData", error);
-//     }
-//   }
-
-// onMounted(async()=>{
-//   const data = await getUserData();
-//   if (data) {
-//     userInfo.value = data;
-//   }
-
-// })
-
-// console.log(userInfo);
-
-// watch(userInfo, (newVal, oldVal) => {
-//   console.log("userInfo changed:", newVal);
-// });
 
 
 watch(userInfo, (newVal, oldVal) => {
   if (newVal) {
     console.log("User info updated:", newVal);
+    // router.push({name:"Index"});
     // Perform actions, e.g., updating the UI, redirecting, etc.
   }
 });
@@ -138,8 +96,11 @@ getTopicCount();
       </RouterLink>
       <div v-if="isLoggedIn">
         Welcome,
-        <span v-if="userInfo" class="font-semibold"
-          >{{ userInfo?.username }} 
+        <!-- <span v-if="userInfo" class="font-semibold"
+          ><RouterLink class="hover:underline" :to="{name:'User',params:{username:userInfo.username}}">{{ userInfo?.username }} </RouterLink>
+        </span> -->
+        <span  class="font-semibold">
+          {{ userInfo?.username }}
         </span>
         <RouterLink class="text-[#181870] hover:underline" to=""> Edit Profile</RouterLink> /<RouterLink class="text-[#181870] hover:underline" to=""> SH </RouterLink
         >/<RouterLink class="text-[#181870] hover:underline" to=""> FT </RouterLink>/ <RouterLink class="text-[#181870] hover:underline" to="">FB</RouterLink> /

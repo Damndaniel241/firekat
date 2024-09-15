@@ -165,3 +165,6 @@ async function postReplyToComment() {
     <p>Comment ID: {{ commentId }}</p> -->
   <!-- <h1>hey God</h1> -->
 </template>
+
+
+<!-- PATCH /api/comments/{comment_id}/ -->

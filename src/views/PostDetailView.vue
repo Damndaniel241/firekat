@@ -10,19 +10,17 @@ import axios from "axios";
 import { TopicSchema, TopicscommentSchema } from "@/schemas/schemas";
 import { useAuth } from "@/composables/useAuth";
 import { formatPostedAt } from "@/utils/Dateutils";
+import { useUser } from "@/composables/useUser";
 
 const topicData = ref<TopicSchema | null>(null);
 const commentsList = ref<TopicscommentSchema | []>([]);
 const { isLoggedIn} = useAuth();
+const {userInfo} = useUser();
+const userData = localStorage.getItem("user");
 
 const route = useRoute();
 const router = useRouter();
-// interface Content {
-//       title: string;
-//       description: string;
-//       images: string;
-//       id: string;
-//     }
+
 
 const topicId = computed(() => route.params?.topicId as string);
 console.log(topicId);
@@ -52,17 +50,33 @@ async function getComments() {
   }
 }
 
+
+async function deleteComment(commentID:number){
+try{
+  if (!userData) {
+      throw new Error("No user data found in localStorage.");
+    }
+    const token = JSON.parse(userData).token;
+        const response = await axios.delete(`http://127.0.0.1:8000/api/comments/${commentID}/`,{
+            headers:{
+                Authorization:`Token ${token}`,
+            },
+        }
+        );
+        commentsList.value = commentsList.value.filter((comment) => comment.id !== commentID);
+        // router.go(-1);
+}catch(error){
+console.error("error deleting comment",error);
+}
+}
+
 getTopicData();
 getComments();
 
 console.log(topicData);
 
 
-// const data = computed(()=>contents.filter((value)=>postId.value===value.id))
 
-// console.log(data);
-
-// const postId = route.params.postId
 
 function goToUser(userId:number,username:string) {
   router.push({ 
@@ -77,6 +91,20 @@ function goToNewPost(topicId:number, commentId:number) {
   router.push({ 
     path: '/-/makecomment', 
     query: { topic: topicId, post: commentId }
+  });
+}
+
+function goToEditPost(topicId:number|undefined, commentId:number|undefined) {
+  router.push({ 
+    path: '/-/editcomment', 
+    query: { topic: topicId, post: commentId }
+  });
+}
+
+function goToEditTopic(topicId:number|undefined) {
+  router.push({ 
+    path: '/-/edit-topic', 
+    query: { topic: topicId }
   });
 }
 </script>
@@ -101,7 +129,7 @@ function goToNewPost(topicId:number, commentId:number) {
       <!-- <RouterLink v-if="topicData" :to="{name:'User',params:{username:topicData?.author.username}}" class="text-[#551818] font-bold hover:underline">
         {{ topicData?.author.username }} </RouterLink
       >: -->
-      <button @click="goToUser(topicData.author.id,topicData.author.username)" v-if="topicData" class="text-[#551818] font-bold hover:underline">{{ topicData?.author.username }}</button>
+      <button @click="goToUser(topicData.author.id,topicData.author.username)" v-if="topicData" class="text-[#551818] font-bold hover:underline cursor-pointer">{{ topicData?.author.username }}<span class="font-normal text-sm">(author)</span> </button>:
       <span class="text-[#555518] font-semibold">{{
         formatPostedAt(topicData?.posted_at ?? '')
       }}</span>
@@ -111,10 +139,14 @@ function goToNewPost(topicId:number, commentId:number) {
       <p>
         {{ topicData?.content }}
       </p>
-
-      <button v-if="topicData && isLoggedIn" class="text-[#181882] cursor-pointer hover:underline" @click="goToNewPost(topicData?.id , 1)">(quote)</button>
+      <div class="flex gap-1" v-if="isLoggedIn">
+      <button v-if="topicData" class="text-[#181882] cursor-pointer hover:underline" @click="goToNewPost(topicData?.id , 1)">(quote)</button>
+      <button v-if="topicData?.author.id == userInfo?.id" @click="goToEditTopic(topicData?.id)" class="text-[#181882] cursor-pointer hover:underline" >(edit topic)</button>
+    </div>
     </div>
   </div>
+
+
   <div
     class="flex flex-col rounded-lg border border-gray-300 shadow-lg w-[70em] place-self-center"
     v-for="comment in commentsList"
@@ -123,23 +155,30 @@ function goToNewPost(topicId:number, commentId:number) {
       <RouterLink to="" class="text-[#181882] font-bold hover:underline">
         RE: {{ topicData?.title }} </RouterLink> by
         <RouterLink :to="{name:'User',params:{username:comment.user.username}}" class="text-[#551818] font-bold hover:underline">
-          {{ comment.user.username }} 
+          {{ comment.user.username }}<span class="font-normal text-sm" v-if="comment.user.id == topicData?.author.id">(author)</span>
         </RouterLink>: 
         <span class="text-[#555518] font-semibold">{{
           formatPostedAt(comment?.posted_at)
         }}</span>
       
     </div>
+
+
     <div class="bg-[#F6F6EC] p-1">
       <!-- <img :src="postpic" alt="postpic" class="w-[400px] h-[400px] p-4" /> -->
        <p v-if="comment.quoted_comment" class="bg-[#E8ECE0] rounded-lg p-1">
-        <p class="text-[#181882] font-bold">{{ comment.quoted_comment.user.username  }}:</p>
-        {{ comment.quoted_comment.content }} </p>
+      <p>  <RouterLink :to="{name:'User',params:{username:comment.quoted_comment.user.username}}" class="text-[#181882] font-bold hover:underline">{{ comment.quoted_comment.user.username  }}:</RouterLink
+          ></p>
+        {{ comment.quoted_comment?.content }} </p>
       <p>
         {{ comment?.content }}
       </p>
       
-      <button v-if="topicData && isLoggedIn" class="text-[#181882] cursor-pointer hover:underline" @click="goToNewPost(topicData?.id , comment.id)">(quote)</button>
+      <div class="flex gap-1" v-if="isLoggedIn">
+      <button v-if="topicData" class="text-[#181882] cursor-pointer hover:underline" @click="goToNewPost(topicData?.id , comment.id)">(quote)</button>
+      <button v-if="comment.user.id == userInfo?.id" @click="goToEditPost(topicData?.id,comment.id)" class="text-[#181882] cursor-pointer hover:underline" >(edit)</button>
+      <button v-if="comment.user.id == userInfo?.id" @click="deleteComment(comment.id)" class="text-[#181882] cursor-pointer hover:underline" >(delete)</button>
+    </div>
     </div>
   </div>
   

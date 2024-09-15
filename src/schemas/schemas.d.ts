@@ -98,8 +98,8 @@ export type TopicscommentSchema = [
       content: string;
       id: number;
       posted_at: string;
-      quoted_comment: null;
-      quoted_topic: number;
+      quoted_comment: number|null;
+      quoted_topic: number|null;
       topic: number;
       user: {
         id: number;
@@ -110,3 +110,19 @@ export type TopicscommentSchema = [
     quoted_topic: string | null;
   }
 ];
+
+
+export type CommentSchema = {
+  content:string,
+  id:number,
+  posted_at:string,
+  quoted_comment:number|null,
+  quoted_topic:number|null,
+  topic:number,
+  user:
+  {
+  email:string,
+  id:number,
+  username:string
+}
+}

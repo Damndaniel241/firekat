@@ -37,7 +37,13 @@ export const router = createRouter({
         path:"/-/new-topic",
         name: "PostTopic",
         component: () => import("@/views/PostTopicView.vue"),
-        props: route => ({ facultyId: route.query.faculty }),
+        props: route => ({ facultyId: route.query.faculty,subjectId:route.query.subject }),
+      },
+      {
+        path: "/-/edit-topic",
+        name: "EditTopic",
+        component: () => import("@/views/EditTopicView.vue"),
+        props: route => ({ topicId: route.query.topic}),
       },
       {
         // path: "/-/newpost?topic=:topicId&post=:commentId",
@@ -45,6 +51,12 @@ export const router = createRouter({
         path: "/-/makecomment",
         name: "MakeComment",
         component: () => import("@/views/MakeCommentView.vue"),
+        props: route => ({ topicId: route.query.topic, commentId: route.query.post }),
+      },
+      {
+        path: "/-/editcomment",
+        name: "EditComment",
+        component: () => import("@/views/EditCommentView.vue"),
         props: route => ({ topicId: route.query.topic, commentId: route.query.post }),
       },
       {

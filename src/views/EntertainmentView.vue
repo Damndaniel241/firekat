@@ -6,6 +6,7 @@ import { EntertainmentSchema,GeneralTopicSchema } from "@/schemas/schemas";
 import { useRouter } from "vue-router";
 import { formatPostedAt } from "@/utils/Dateutils";
 import { capitalize } from "@/utils/Capitalize";
+import { goToNewPost } from "@/utils/linktopost";
 
 const  router = useRouter();
 const subjects = ref<EntertainmentSchema | []>([]);
@@ -80,7 +81,7 @@ console.log(subjects)
     <RouterLink v-else class="hover:underline text-[#181882] font-medium" :to="{name:'Login'}">(create new topic)</RouterLink>
   </div> -->
 
-  <button v-if="isLoggedIn" class="text-[#181882] cursor-pointer hover:underline" @click="goToNewTopic(3)">(create new topic)</button>
+  <button v-if="isLoggedIn" class="hover:underline text-[#181882] font-medium" @click="goToNewPost(router,3,null)" >(create new topic)</button>
 
   <div
     class="rounded-lg flex flex-col first:border-t-0 last:rounded-b-lg shadow-lg last:border-b-0 bg-[#F6F6EC] border border-gray-300 w-[70em] place-self-center"

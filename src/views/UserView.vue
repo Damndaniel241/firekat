@@ -30,6 +30,7 @@ async function getUserNumber() {
       console.log("User Details:", response.data);
       userNumber.value = response.data;
       console.log(userNumber.value);
+    await  getUserData();
       return response.data;
     } catch (error) {
       console.error("error fetching userNumber", error);
@@ -39,11 +40,12 @@ async function getUserNumber() {
 async function getUserData(){
   try {
       const response = await axios.get(
-        `http://127.0.0.1:8000/accounts/users/${userNumber}/`
+        `http://127.0.0.1:8000/accounts/users/${userNumber.value}/`
       );
       console.log("User Details:", response.data);
       userInfo.value = response.data;
       console.log(userInfo.value);
+      
       return response.data;
     } catch (error) {
       console.error("error fetching userData", error);
@@ -53,12 +55,13 @@ async function getUserData(){
 
 onBeforeMount(()=>{
 getUserNumber();
+// getUserData();
 }
 )
 
-onMounted(()=>{
-   getUserData();
-})
+// onMounted(()=>{
+//    getUserData();
+// })
 
 
 
@@ -69,5 +72,5 @@ onMounted(()=>{
 
 <template>
    <h1>hey there</h1>
-   <p>User ID: {{ userNumber }}</p>
+   <p>User ID: {{ userInfo?.username }}</p>
 </template>
