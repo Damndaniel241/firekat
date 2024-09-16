@@ -12,6 +12,7 @@ const topicID = route.query.topic;
 
 const title = ref("");
 const content = ref("");
+const selectedFiles = ref<File[]>([]);
 
 
 async function getComment() {
@@ -40,11 +41,18 @@ getComment();
 
 async function postEditToTopic(){
     const currentDateTime = new Date().toISOString();
-    const editCommentData = {
-        title:title.value,
-        content:content.value,
-        posted_at:currentDateTime,
-    }
+    // const editCommentData = {
+    //     title:title.value,
+    //     content:content.value,
+    //     posted_at:currentDateTime,
+    // }
+    const editCommentData = new FormData();
+    editCommentData.append('title',title.value);
+    editCommentData.append('content',content.value);
+    editCommentData.append('posted_at',currentDateTime);
+    selectedFiles.value.forEach((file, index) => {
+    editCommentData.append(`image_${index+1}`, file); // Append each image
+  });
     try{
         if (!userData) {
       throw new Error("No user data found in localStorage.");
@@ -60,7 +68,26 @@ async function postEditToTopic(){
     }catch(error){
         console.error("error posting edit",error);
     }
+};
+
+function handleFileChange(event: Event) {
+  const input = event.target as HTMLInputElement;
+  if (input?.files) {
+    // Get current files
+    const currentFiles = selectedFiles.value || [];
+    
+    // Add new files, up to a total of 4
+    const newFiles = Array.from(input.files);
+    const updatedFiles = [...currentFiles, ...newFiles].slice(0, 4);
+    
+    // Update selectedFiles
+    selectedFiles.value = updatedFiles;
+    
+    // Clear the file input
+    input.value = '';
+  }
 }
+
 
 </script>
 
@@ -79,6 +106,23 @@ async function postEditToTopic(){
     <textarea v-model="content" type="text" class="rounded-xl w-[100%]">
 
     </textarea>
+    </div>
+
+    <div class="flex ">
+      <div>{{ topicData?.image_1 }}</div>
+      <input type="file" @change="handleFileChange"  accept="image/*" />
+    </div>
+    <div class="flex ">
+      <div>{{ topicData?.image_1 }}</div>
+      <input type="file" @change="handleFileChange"  accept="image/*" />
+    </div>
+    <div class="flex ">
+      <div>{{ topicData?.image_1 }}</div>
+      <input type="file" @change="handleFileChange"  accept="image/*" />
+    </div>
+    <div class="flex ">
+      <div>{{ topicData?.image_1 }}</div>
+      <input type="file" @change="handleFileChange"  accept="image/*" />
     </div>
     <button
       type="button"

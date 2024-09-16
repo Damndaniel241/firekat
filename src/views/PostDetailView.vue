@@ -13,7 +13,7 @@ import { formatPostedAt } from "@/utils/Dateutils";
 import { useUser } from "@/composables/useUser";
 
 const topicData = ref<TopicSchema | null>(null);
-const commentsList = ref<TopicscommentSchema | []>([]);
+const commentsList = ref<TopicscommentSchema>([]);
 const { isLoggedIn} = useAuth();
 const {userInfo} = useUser();
 const userData = localStorage.getItem("user");
@@ -138,6 +138,10 @@ function goToEditTopic(topicId:number|undefined) {
       <!-- <img :src="postpic" alt="postpic" class="w-[400px] h-[400px] p-4" /> -->
       <p>
         {{ topicData?.content }}
+        <img v-if="topicData?.image_1" :src="topicData?.image_1" alt="postpic" class="w-[800px] h-[400px] p-4">
+        <img v-if="topicData?.image_2" :src="topicData?.image_2" alt="postpic" class="w-[800px] h-[400px] p-4">
+        <img v-if="topicData?.image_3" :src="topicData?.image_3" alt="postpic" class="w-[800px] h-[400px] p-4">
+        <img v-if="topicData?.image_4" :src="topicData?.image_4" alt="postpic" class="w-[800px] h-[400px] p-4">
       </p>
       <div class="flex gap-1" v-if="isLoggedIn">
       <button v-if="topicData" class="text-[#181882] cursor-pointer hover:underline" @click="goToNewPost(topicData?.id , 1)">(quote)</button>

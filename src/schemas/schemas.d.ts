@@ -29,16 +29,20 @@ export type TopicSchema = {
   id: number;
   title: string;
   slug: string;
-  subject: null;
+  subject: number|null;
   comment_count: number;
   author: {
     email: string;
     id: number;
     username: string;
   };
-  faculty: number;
-  content: string;
+  faculty: number|null;
+  content: string|null;
   posted_at: string;
+  image_1:string|null;
+  image_2:string|null;
+  image_3:string|null;
+  image_4:string|null;
 };
 
 export type allTopicsSchema = [
@@ -83,7 +87,7 @@ export type userSchema = {
   email: string;
 };
 
-export type TopicscommentSchema = [
+export type TopicscommentSchema = 
   {
     id: number;
     content: string;
@@ -108,8 +112,7 @@ export type TopicscommentSchema = [
       };
     } | null;
     quoted_topic: string | null;
-  }
-];
+  }[];
 
 
 export type CommentSchema = {
