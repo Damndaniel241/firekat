@@ -20,9 +20,21 @@ const facultyID = route.query.faculty;
 const subjectID = route.query.subject;
 const selectedFiles = ref<File[]>([]);
   const imageUrl = ref<string | null>(null);
+    const formErrors = ref<{ title?: string }>({});
 
 console.log(facultyID,subjectID);
 
+
+function validateForm() {
+  formErrors.value = {};
+
+  if (!title.value.trim()) {
+    formErrors.value.title = 'Title is required';
+    return false;
+  }
+
+  return true;
+}
 
 
 const imageUrls = computed(() => 
@@ -69,6 +81,12 @@ function handleFileChange(event: Event, index: number) {
   }
 }
 async function postTopic(){
+
+
+   // Validate form before proceeding
+   if (!validateForm()) {
+    return;
+  }
     const currentDateTime = new Date().toISOString();
     
  console.log(userInfo.value?.id);
@@ -131,32 +149,19 @@ onUnmounted(() => {
     <div class="flex flex-col">
         <label for="">title</label>
       <input type="text" class="rounded-xl" v-model="title"/>
+      <p v-if="formErrors.title" class="text-red-500">{{ formErrors.title }}</p> <!-- Error message for title -->
+
     </div>
     <div class="flex flex-col">
         <label for="">content</label>
       <textarea cols="10" class="rounded-xl" v-model="content" ></textarea>
     </div>
-    <!-- {{ userInfo?.id }} -->
-    <!-- <div>
-      <input type="file"  @change="handleFileChange" />
-    </div> -->
+   
     <div>
-      <input type="file" @change="handleFileChange"  accept="image/*" />
-      <!-- <img v-if="imageUrl" :src="imageUrl" alt="check"> -->
+      <input type="file" @change="handleFileChange"  accept="image/*" :disabled="selectedFiles.length >= 4"/>
+     
     </div>
-    <div>
-      <input type="file" @change="handleFileChange"  accept="image/*" />
-    </div>
-    <div>
-      <input type="file" @change="handleFileChange"  accept="image/*" />
-    </div>
-    <div>
-      <input type="file" @change="handleFileChange"  accept="image/*" />
-    </div>
-    <!-- <div v-if="imageUrls.length > 0" class="flex flex-wrap mt-2">
-  <img v-for="(url, index) in imageUrls" :key="index" :src="url" 
-       alt="Selected image" class="w-24 h-24 object-cover m-1 rounded" />
-</div> -->
+  
 <div v-for="(url, index) in imageUrls" :key="index" class="relative inline-block m-2">
   <img :src="url" alt="Selected image" class="w-24 h-24 object-cover rounded" />
   <input type="file" @change="(e) => handleFileChange(e, index)" accept="image/*" 
@@ -165,10 +170,9 @@ onUnmounted(() => {
     X
   </button>
 </div>
-    <!-- <div v-if="selectedFiles.length > 0">
-        <p>You have selected {{ selectedFiles.length }} images</p>
-        <p v-if="selectedFiles.length > 4" class="error">You can only upload up to 4 images</p>
-    </div> -->
-    <button type="button" @click="postTopic()" class="bg-white rounded-2xl p-2 mt-1 cursor-pointer">submit</button>
+<p v-if="selectedFiles.length >= 4" class="text-red-500">You can only select a maximum of 4 files.</p>
+   
+    <div></div>
+    <button type="button" @click="postTopic()" class="bg-white rounded-2xl p-2 mt-1 cursor-pointer">post topic</button>
   </div>
 </template>

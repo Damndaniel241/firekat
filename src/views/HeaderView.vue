@@ -8,12 +8,12 @@ import { useUser } from "@/composables/useUser";
 
 const router = useRouter();
 const userData = localStorage.getItem("user");
-const { userInfo } = useUser();
+
+// const { userInfo } = useUser();
 const userCount = ref<number | null>(null);
 const topicCount = ref<number | null>(null);
 
-
-
+const { userInfo } = useUser();
 
 
 watch(userInfo, (newVal, oldVal) => {

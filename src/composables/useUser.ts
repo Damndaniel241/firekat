@@ -29,7 +29,7 @@ async function getUserData() {
           headers: { Authorization: `Token ${token}` },
         }
       );
-      console.log("User Details:", response.data);
+      // console.log("User Details:", response.data);
       userInfo.value = response.data;
       console.log(userInfo.value);
       return response.data;
@@ -53,6 +53,7 @@ async function getUserData() {
 
 export function useUser() {
     // Function to set user info
+
     function setUserData(data: userSchema | null) {
       userInfo.value = data;
     }
