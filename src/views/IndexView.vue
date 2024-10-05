@@ -41,10 +41,10 @@ console.log(contents);
 <template>
   
     <div
-      class="first:border-t-0 last:border-b-0 odd:bg-[#e8ece0] rounded-lg bg-[#F6F6EC] border border-gray-300 w-[70em] flex flex-col place-self-center"
+      class="first:border-t-0 last:border-b-0 odd:bg-[#e8ece0] rounded-lg bg-[#F6F6EC] border border-gray-300 md:w-[70em] flex flex-col place-self-center sm:w-[90%] w-full"
     >
       <div
-        class="odd:bg-[#e8ece0] border-b rounded-t-lg border-b-gray-300 flex justify-center text-xl font-bold uppercase p-2 w-full"
+        class="odd:bg-[#e8ece0] border-b rounded-t-lg border-b-gray-300 flex justify-center sm:text-xl font-bold uppercase p-2 w-full text-lg"
       >
         Firekat nigerian forums
       </div>
@@ -110,7 +110,7 @@ console.log(contents);
     </div>
     <Ads />
     <div
-      class="rounded-lg flex flex-col first:border-t-0 last:rounded-b-lg shadow-lg last:border-b-0 odd:bg-[#e8ece0] bg-[#F6F6EC] border border-gray-300 w-[70em] place-self-center"
+      class="rounded-lg flex flex-col first:border-t-0 last:rounded-b-lg shadow-lg last:border-b-0 odd:bg-[#e8ece0] bg-[#F6F6EC] border border-gray-300 place-self-center md:w-[70em] w-full sm:w-[90%]"
     >
       <div class="flex justify-center items-center p-2">
         <RouterLink to="" class="font-semibold text-[#181882]"
@@ -127,7 +127,7 @@ console.log(contents);
       <div
         v-for="topic in allTopics"
         :key="topic.id"
-        class="odd:bg-[#e8ece0] border border-gray-300 flex justify-center items-center p-2"
+        class="odd:bg-[#e8ece0] border border-gray-300 flex justify-center items-center p-2   "
       >
         <!-- {{ content.title }} -->
         <span class="text-[#984948]">»</span

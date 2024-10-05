@@ -19,14 +19,14 @@ console.log(userInfo.value);
 const facultyID = route.query.faculty;
 const subjectID = route.query.subject;
 const selectedFiles = ref<File[]>([]);
-  const imageUrl = ref<string | null>(null);
+const imageUrl = ref<string | null>(null);
     const formErrors = ref<{ title?: string }>({});
 
 console.log(facultyID,subjectID);
 
 
 function validateForm() {
-  formErrors.value = {};
+  // formErrors.value = {};
 
   if (!title.value.trim()) {
     formErrors.value.title = 'Title is required';
@@ -80,6 +80,8 @@ function handleFileChange(event: Event, index: number) {
     selectedFiles.value = [...selectedFiles.value]; // Trigger reactivity
   }
 }
+
+
 async function postTopic(){
 
 

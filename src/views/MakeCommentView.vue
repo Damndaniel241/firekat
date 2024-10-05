@@ -3,7 +3,7 @@ import { useRoute,useRouter } from "vue-router";
 import { useUser } from "@/composables/useUser";
 import axios from "axios";
 import { TopicSchema } from "@/schemas/schemas";
-import { ref, watchEffect } from "vue";
+import { ref, watchEffect,computed } from "vue";
 
 const { userInfo } = useUser();
 
@@ -18,6 +18,7 @@ const route = useRoute();
 const router = useRouter();
 
 
+
 const topicUID = route.query.topic;
 const commentUID = route.query.post;
 // console.log(route.query.topic);  // 'topicId' from query
@@ -25,6 +26,25 @@ const commentUID = route.query.post;
 
 const user = ref(null);
 const content = ref("");
+const selectedFiles = ref<File[]>([]);
+const imageUrl = ref<string | null>(null);
+const formErrors = ref<{ title?: string }>({});
+
+
+function validateForm(){
+  // formErrors.value = {};
+
+  if(!content.value.trim()){
+    formErrors.value.title = "content is required";
+    return false;
+  }
+  return true;
+}
+
+
+const imageUrls = computed(() => 
+  selectedFiles.value.map(file => URL.createObjectURL(file))
+);
 
 // getting topic data to access particular comments under topic
 async function getTopicData() {
@@ -67,6 +87,10 @@ getTopicData();
 // getTopicDataForTopic();
 
 async function postReplyToTopic() {
+
+  if (!validateForm()){
+    return;
+  }
   const currentDateTime = new Date().toISOString();
 
 //   if (userInfo.value?.id) return;
@@ -99,6 +123,10 @@ async function postReplyToTopic() {
 }
 
 async function postReplyToComment() {
+
+  if (!validateForm()){
+    return;
+  }
   const currentDateTime = new Date().toISOString();
 
   const commentData = {
@@ -144,13 +172,14 @@ async function postReplyToComment() {
       v-model="content"
       class="rounded-xl w-[100%] mt-2"
     ></textarea>
+    <div class="text-red-500" v-if="formErrors">{{ formErrors.title }}</div>
     <button
       type="button"
       v-if="Topic && Topic.content"
       @click="postReplyToComment"
       class="bg-white rounded-2xl p-2 mt-1 cursor-pointer"
     >
-      reply 
+      reply
     </button>
     <button
       type="button"
@@ -159,7 +188,7 @@ async function postReplyToComment() {
       class="bg-white rounded-2xl p-2 mt-1 cursor-pointer"
     >
       reply 
-    </button>
+  </button>
   </div>
   <!-- <p>Topic ID: {{ topicId }}</p>
     <p>Comment ID: {{ commentId }}</p> -->

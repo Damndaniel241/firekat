@@ -2,7 +2,7 @@
 import HeaderView from "./HeaderView.vue";
 import Ads from "@/components/Ads.vue";
 import { useRoute, useRouter } from "vue-router";
-import { computed, ref } from "vue";
+import { computed, ref,watch } from "vue";
 import postpic from "@/assets/files.png";
 import FooterView from "./FooterView.vue";
 import { contents } from "@/Fakedb";
@@ -17,10 +17,41 @@ const commentsList = ref<TopicscommentSchema>([]);
 const { isLoggedIn} = useAuth();
 const {userInfo} = useUser();
 const userData = localStorage.getItem("user");
-
+const likeText = ref(false); 
+const count = ref(0);
 const route = useRoute();
 const router = useRouter();
 
+
+async function likePost(){
+  count.value = count.value+1;
+  likeText.value = !likeText.value;
+  console.log(likeText.value);
+  const likeData = {
+    user: userInfo.value?.id,
+    liked:likeText.value,
+    topic:topicId.value
+  }
+  try{
+    if (!userData) {
+      throw new Error("No user data found in localStorage.");
+    }
+    const token = JSON.parse(userData).token;
+    const response = await axios.post(`http://127.0.0.1:8000/api/topics/like/${topicId.value}/`,likeData,
+    {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      }
+    );
+    console.log(likeData);
+  }catch(error){
+    console.log("error liking post", error)
+  }
+  
+  
+
+}
 
 const topicId = computed(() => route.params?.topicId as string);
 console.log(topicId);
@@ -145,6 +176,7 @@ function goToEditTopic(topicId:number|undefined) {
       </p>
       <div class="flex gap-1" v-if="isLoggedIn">
       <button v-if="topicData" class="text-[#181882] cursor-pointer hover:underline" @click="goToNewPost(topicData?.id , 1)">(quote)</button>
+      <button @click="likePost" class="text-[#181882] cursor-pointer hover:underline">({{ likeText ? 'unlike': 'like' }})</button>
       <button v-if="topicData?.author.id == userInfo?.id" @click="goToEditTopic(topicData?.id)" class="text-[#181882] cursor-pointer hover:underline" >(edit topic)</button>
     </div>
     </div>
@@ -158,7 +190,7 @@ function goToEditTopic(topicId:number|undefined) {
     <div class="bg-[#E8ECE0] p-2 border-b-gray-300 border-b border-t-rounded-lg">
       <RouterLink to="" class="text-[#181882] font-bold hover:underline">
         RE: {{ topicData?.title }} </RouterLink> by
-        <RouterLink :to="{name:'User',params:{username:comment.user.username}}" class="text-[#551818] font-bold hover:underline">
+        <RouterLink :to="{name:'User',params:{username:comment.user?.username}}" class="text-[#551818] font-bold hover:underline">
           {{ comment.user.username }}<span class="font-normal text-sm" v-if="comment.user.id == topicData?.author.id">(author)</span>
         </RouterLink>: 
         <span class="text-[#555518] font-semibold">{{
@@ -179,9 +211,10 @@ function goToEditTopic(topicId:number|undefined) {
       </p>
       
       <div class="flex gap-1" v-if="isLoggedIn">
+        
       <button v-if="topicData" class="text-[#181882] cursor-pointer hover:underline" @click="goToNewPost(topicData?.id , comment.id)">(quote)</button>
-      <button v-if="comment.user.id == userInfo?.id" @click="goToEditPost(topicData?.id,comment.id)" class="text-[#181882] cursor-pointer hover:underline" >(edit)</button>
-      <button v-if="comment.user.id == userInfo?.id" @click="deleteComment(comment.id)" class="text-[#181882] cursor-pointer hover:underline" >(delete)</button>
+      <button v-if="comment.user?.id == userInfo?.id" @click="goToEditPost(topicData?.id,comment.id)" class="text-[#181882] cursor-pointer hover:underline" >(edit)</button>
+      <button v-if="comment.user?.id == userInfo?.id" @click="deleteComment(comment.id)" class="text-[#181882] cursor-pointer hover:underline" >(delete)</button>
     </div>
     </div>
   </div>
