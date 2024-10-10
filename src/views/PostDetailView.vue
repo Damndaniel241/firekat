@@ -2,15 +2,16 @@
 import HeaderView from "./HeaderView.vue";
 import Ads from "@/components/Ads.vue";
 import { useRoute, useRouter } from "vue-router";
-import { computed, ref,watch } from "vue";
+import { computed, onMounted, ref,watch } from "vue";
 import postpic from "@/assets/files.png";
 import FooterView from "./FooterView.vue";
 import { contents } from "@/Fakedb";
 import axios from "axios";
-import { TopicSchema, TopicscommentSchema } from "@/schemas/schemas";
+import { TopicSchema, TopicscommentSchema,LikeStatusSchema, CommentSchema } from "@/schemas/schemas";
 import { useAuth } from "@/composables/useAuth";
 import { formatPostedAt } from "@/utils/Dateutils";
 import { useUser } from "@/composables/useUser";
+
 
 const topicData = ref<TopicSchema | null>(null);
 const commentsList = ref<TopicscommentSchema>([]);
@@ -18,10 +19,64 @@ const { isLoggedIn} = useAuth();
 const {userInfo} = useUser();
 const userData = localStorage.getItem("user");
 const likeText = ref(false); 
+const commentLikeText = ref(false);
 const count = ref(0);
 const route = useRoute();
 const router = useRouter();
+const like_status = ref<LikeStatusSchema>(null);
+const comment_like_status = ref<LikeStatusSchema>(null);
+const topicId = computed(() => route.params?.topicId as string);
+console.log(topicId);
 
+
+async function get_like_status(){
+  try{
+    if (!userData) {
+      throw new Error("No user data found in localStorage.");
+    }
+    const token = JSON.parse(userData).token;
+  const  response = await axios.get(`http://127.0.0.1:8000/api/topics/${topicId.value}/get_like_status/`,
+    {headers:{
+      Authorization:`Token ${token}`
+    },
+  }
+  );
+  console.log(response.data);
+  like_status.value = response.data;
+  likeText.value = response.data.like_status;
+}catch(error){
+  console.error("error retrieving like status",error);
+}
+}
+
+
+async function get_comment_like_status(commentID:number){
+  try{
+    if (!userData) {
+      throw new Error("No user data found in localStorage.");
+    }
+    const token = JSON.parse(userData).token;
+  const response = await axios.get(`http://127.0.0.1:8000/api/comments/${commentID}/get_comment_like_status/`,
+    {headers:{
+      Authorization:`Token ${token}`
+    },
+  }
+  );
+  // console.log(response.data);
+  comment_like_status.value = response.data;
+  // console.log(comment_like_status.value);
+  const comment = commentsList.value.find((c)=>c.id===commentID);
+  if (comment){
+    comment.comment_like_status = response.data.comment_like_status;
+  }
+
+  
+  
+  // commentLikeText.value = response.data.comment_like_status;
+}catch(error){
+  console.error("error retrieving like status",error);
+}
+}
 
 async function likePost(){
   count.value = count.value+1;
@@ -30,14 +85,14 @@ async function likePost(){
   const likeData = {
     user: userInfo.value?.id,
     liked:likeText.value,
-    topic:topicId.value
+    topic:parseInt(topicId.value)
   }
   try{
     if (!userData) {
       throw new Error("No user data found in localStorage.");
     }
     const token = JSON.parse(userData).token;
-    const response = await axios.post(`http://127.0.0.1:8000/api/topics/like/${topicId.value}/`,likeData,
+    const response = await axios.post(`http://127.0.0.1:8000/api/topics/${topicId.value}/like/`,likeData,
     {
         headers: {
           Authorization: `Token ${token}`,
@@ -48,13 +103,45 @@ async function likePost(){
   }catch(error){
     console.log("error liking post", error)
   }
+}
+
+
+
+async function likeComment(commentID:number){
+  count.value = count.value+1;
+  commentLikeText.value = !commentLikeText.value;
+  console.log(commentLikeText.value);
+  const commentLikeData = {
+    user: userInfo.value?.id,
+    liked:commentLikeText.value,
+    comment:commentID,
+  }
+  try{
+    if (!userData) {
+      throw new Error("No user data found in localStorage.");
+    }
+    const token = JSON.parse(userData).token;
+    const response = await axios.post(`http://127.0.0.1:8000/api/comments/${commentID}/like_comment/`,commentLikeData,
+    {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      }
+    );
+    console.log(commentLikeData);
+    const comment = commentsList.value.find((c)=>c.id===commentID);
+    if (comment){
+      comment.comment_like_status = !comment.comment_like_status
+    }
+  }catch(error){
+    console.log("error liking comment", error)
+  }
   
   
 
 }
 
-const topicId = computed(() => route.params?.topicId as string);
-console.log(topicId);
+
 async function getTopicData() {
   try {
     const response = await axios.get(
@@ -62,11 +149,14 @@ async function getTopicData() {
     );
     console.log(response.data);
     topicData.value = response.data;
+    
+    // if topicData.value.
     return response.data;
   } catch (error) {
     console.log(error);
   }
 }
+
 
 async function getComments() {
   try {
@@ -74,7 +164,25 @@ async function getComments() {
       `http://127.0.0.1:8000/api/topics/${topicId.value}/comments/`
     );
     console.log(response.data);
-    commentsList.value = response.data;
+    commentsList.value = response.data.map((comment:CommentSchema)=>({
+      ...comment,
+      comment_like_status:false,
+    }));
+    console.log(commentsList.value);
+    
+
+
+   commentsList.value.forEach((comment)=>{
+      // console.log("i am working fine");
+      // console.log(comment.id);
+     get_comment_like_status(comment.id);
+    
+     
+    //  commentLikeText.value = comment_like_status.comment_like_status;
+      
+  });
+
+
     return response.data;
   } catch (error) {
     console.log(error);
@@ -103,6 +211,15 @@ console.error("error deleting comment",error);
 
 getTopicData();
 getComments();
+get_like_status();
+
+// get_comment_like_status(comment.id)
+    commentsList.value.forEach((comment)=>{
+      // console.log("i am working fine");
+      console.log(comment.id);
+      
+  });
+
 
 console.log(topicData);
 
@@ -176,6 +293,8 @@ function goToEditTopic(topicId:number|undefined) {
       </p>
       <div class="flex gap-1" v-if="isLoggedIn">
       <button v-if="topicData" class="text-[#181882] cursor-pointer hover:underline" @click="goToNewPost(topicData?.id , 1)">(quote)</button>
+        <span class="text-[#555518]" v-if="topicData && topicData?.like_count>0">{{ topicData.like_count }}likes</span>
+        <!-- <span v-if="like_status">{{ like_status.like_status }}</span> -->
       <button @click="likePost" class="text-[#181882] cursor-pointer hover:underline">({{ likeText ? 'unlike': 'like' }})</button>
       <button v-if="topicData?.author.id == userInfo?.id" @click="goToEditTopic(topicData?.id)" class="text-[#181882] cursor-pointer hover:underline" >(edit topic)</button>
     </div>
@@ -187,6 +306,7 @@ function goToEditTopic(topicId:number|undefined) {
     class="flex flex-col rounded-lg border border-gray-300 shadow-lg w-[70em] place-self-center"
     v-for="comment in commentsList"
   >
+  
     <div class="bg-[#E8ECE0] p-2 border-b-gray-300 border-b border-t-rounded-lg">
       <RouterLink to="" class="text-[#181882] font-bold hover:underline">
         RE: {{ topicData?.title }} </RouterLink> by
@@ -214,6 +334,8 @@ function goToEditTopic(topicId:number|undefined) {
         
       <button v-if="topicData" class="text-[#181882] cursor-pointer hover:underline" @click="goToNewPost(topicData?.id , comment.id)">(quote)</button>
       <button v-if="comment.user?.id == userInfo?.id" @click="goToEditPost(topicData?.id,comment.id)" class="text-[#181882] cursor-pointer hover:underline" >(edit)</button>
+    <span v-if="comment.comment_like_count>0" class="font-medium text-[#555518]">{{ comment.comment_like_count }}likes</span>
+      <button @click="likeComment(comment.id)" class="text-[#181882] cursor-pointer hover:underline">({{ comment.comment_like_status ? 'unlike': 'like' }})</button>
       <button v-if="comment.user?.id == userInfo?.id" @click="deleteComment(comment.id)" class="text-[#181882] cursor-pointer hover:underline" >(delete)</button>
     </div>
     </div>

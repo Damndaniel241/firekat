@@ -31,6 +31,7 @@ export type TopicSchema = {
   slug: string;
   subject: number|null;
   comment_count: number;
+  like_count:number;
   author: {
     email: string;
     id: number;
@@ -96,6 +97,9 @@ export type TopicscommentSchema =
       username: string;
       email: string;
     };
+    comment_like_status: boolean |null;
+    comment_like_count:number;
+
     topic: number;
     posted_at: string;
     quoted_comment: {
@@ -129,3 +133,9 @@ export type CommentSchema = {
   username:string
 }
 }
+
+
+export type LikeStatusSchema = {
+  status:string,
+  like_status:Boolean
+}|null
