@@ -292,11 +292,11 @@ function goToEditTopic(topicId:number|undefined) {
         <img v-if="topicData?.image_4" :src="topicData?.image_4" alt="postpic" class="w-[800px] h-[400px] p-4">
       </p>
       <div class="flex gap-1" v-if="isLoggedIn">
-      <button v-if="topicData" class="text-[#181882] cursor-pointer hover:underline" @click="goToNewPost(topicData?.id , 1)">(quote)</button>
-        <span class="text-[#555518]" v-if="topicData && topicData?.like_count>0">{{ topicData.like_count }}likes</span>
+      <button v-if="topicData" class="text-[#551818] text-xs cursor-pointer hover:underline" @click="goToNewPost(topicData?.id , 1)">(quote)</button>
+        <span class="text-[#555518] text-xs" v-if="topicData && topicData?.like_count>0">{{ topicData.like_count }}likes</span>
         <!-- <span v-if="like_status">{{ like_status.like_status }}</span> -->
-      <button @click="likePost" class="text-[#181882] cursor-pointer hover:underline">({{ likeText ? 'unlike': 'like' }})</button>
-      <button v-if="topicData?.author.id == userInfo?.id" @click="goToEditTopic(topicData?.id)" class="text-[#181882] cursor-pointer hover:underline" >(edit topic)</button>
+      <button @click="likePost" class="text-[#551818] text-xs cursor-pointer hover:underline">({{ likeText ? 'unlike': 'like' }})</button>
+      <button v-if="topicData?.author.id == userInfo?.id" @click="goToEditTopic(topicData?.id)" class="text-[#551818] text-xs cursor-pointer hover:underline" >(edit topic)</button>
     </div>
     </div>
   </div>
@@ -332,11 +332,11 @@ function goToEditTopic(topicId:number|undefined) {
       
       <div class="flex gap-1" v-if="isLoggedIn">
         
-      <button v-if="topicData" class="text-[#181882] cursor-pointer hover:underline" @click="goToNewPost(topicData?.id , comment.id)">(quote)</button>
-      <button v-if="comment.user?.id == userInfo?.id" @click="goToEditPost(topicData?.id,comment.id)" class="text-[#181882] cursor-pointer hover:underline" >(edit)</button>
-    <span v-if="comment.comment_like_count>0" class="font-medium text-[#555518]">{{ comment.comment_like_count }}likes</span>
-      <button @click="likeComment(comment.id)" class="text-[#181882] cursor-pointer hover:underline">({{ comment.comment_like_status ? 'unlike': 'like' }})</button>
-      <button v-if="comment.user?.id == userInfo?.id" @click="deleteComment(comment.id)" class="text-[#181882] cursor-pointer hover:underline" >(delete)</button>
+      <button v-if="topicData" class="text-[#551818] cursor-pointer hover:underline text-xs" @click="goToNewPost(topicData?.id , comment.id)">(quote)</button>
+      <button v-if="comment.user?.id == userInfo?.id" @click="goToEditPost(topicData?.id,comment.id)" class="text-[#551818] text-xs cursor-pointer hover:underline" >(edit)</button>
+    <span v-if="comment.comment_like_count>0" class="font-medium text-[#555518] text-xs">{{ comment.comment_like_count }}likes</span>
+      <button @click="likeComment(comment.id)" class="text-[#551818] text-xs cursor-pointer hover:underline">({{ comment.comment_like_status ? 'unlike': 'like' }})</button>
+      <button v-if="comment.user?.id == userInfo?.id" @click="deleteComment(comment.id)" class="text-[#551818] text-xs cursor-pointer hover:underline" >(delete)</button>
     </div>
     </div>
   </div>

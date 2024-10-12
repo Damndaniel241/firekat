@@ -51,7 +51,7 @@ export type allTopicsSchema = [
     id: number;
     title: string;
     slug: string;
-    subject: null;
+    subject: number | null;
     comment_count: number;
     author: {
       email: string;

@@ -1,42 +1,68 @@
 <script setup lang="ts">
-import {ref,onMounted,computed,onUpdated,onUnmounted, onBeforeMount} from 'vue';
+import axios from "axios";
+import { onMounted, ref } from "vue";
+import { allTopicsSchema, ScienceSchema } from "@/schemas/schemas";
+import { useRoute, useRouter } from "vue-router";
+import { goToNewPost } from "@/utils/linktopost";
+import { useAuth } from "@/composables/useAuth";
+import { GeneralTopicSchema } from "@/schemas/schemas";
+import { formatPostedAt } from "@/utils/Dateutils";
 
-const counter = ref(0);
+const router = useRouter();
+const topics = ref<allTopicsSchema | []>([]);
+const { isLoggedIn } = useAuth();
+
+
+async function getTopics() {
+  try {
+    const response = await axios.get(
+      "http://127.0.0.1:8000/api/subjects/7/topics/"
+    );
+    console.log(response.data);
+    topics.value = response.data;
+  } catch (error) {
+    console.error("Error retrieving subjects", error);
+  }
+}
 
 onMounted(() => {
-      alert('Component is mounted');
-    });
-
-    onUpdated(() => {
-      console.log('Component is updated');
-    });
-
-
-      // onUnmounted Hook: Executes logic before component is unmounted
-      onUnmounted(() => {
-      console.log('Component is unmounted');
-    });
-    // onBeforeMount(() => {
-    // //   console.log('Component is unmounted');
-    // alert("component is about to be mounted");
-    // });
-
-    const increment = () =>{
-        counter.value = counter.value+1
-    }
-
-    const decrement = () =>{
-        counter.value = counter.value-1
-    }
+getTopics();
+});
 </script>
 
 
-<template>
-    <h1>this is a boy</h1>
 
-    <h2>counter  = {{ counter }}</h2>
-    <div class="flex gap-1">
-    <button type="button" class="bg-black text-white p-2" @click="increment">increase</button>
-    <button type="button" class="bg-black text-white p-2" @click="decrement">decrease</button>
-</div>
-</template>
+<template>
+    <Ads />
+    <button
+      v-if="isLoggedIn"
+      class="hover:underline text-[#181882] font-medium"
+      @click="goToNewPost(router, null, 7)"
+    >
+      (create new topic)
+    </button>
+  
+    <div
+      class="rounded-lg flex flex-col first:border-t-0 last:rounded-b-lg shadow-lg last:border-b-0 bg-[#F6F6EC] border border-gray-300 w-[70em] place-self-center"
+    v-if="topics.length>0"
+      >
+    <div
+        class="odd:bg-[#e8ece0] flex flex-col justify-center items-center border border-gray-300 p-2"
+        v-for="topic in topics"
+        :key="topic.id"
+      >
+      <RouterLink :to="{name:'PostDetail',params:{topicId:topic.id,topicSlug:topic.slug}}" class="font-bold text-[#181882] hover:underline"
+          >{{ topic?.title }}</RouterLink
+        >
+        <div class="text-sm text-[#555518]">
+          by
+          <RouterLink class="hover:underline text-[#551818] font-bold" to="">{{
+            topic.author.username
+          }}</RouterLink>.
+          <span class="font-bold"> {{ topic.comment_count }} </span> posts <span class="font-bold"> {{ formatPostedAt(topic.posted_at) }}</span>
+        </div>
+        </div>
+  </div>
+    <Ads />
+  </template>
+  
