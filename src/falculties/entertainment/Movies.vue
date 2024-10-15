@@ -41,6 +41,12 @@ getTopics();
     >
       (create new topic)
     </button>
+    <RouterLink
+    :to="{ name: 'Login' }"
+    class="hover:underline text-[#181882] font-medium place-self-center"
+    v-else
+    >(create new topic)</RouterLink
+  >
   
     <div
       class="rounded-lg flex flex-col first:border-t-0 last:rounded-b-lg shadow-lg last:border-b-0 bg-[#F6F6EC] border border-gray-300 w-[70em] place-self-center"

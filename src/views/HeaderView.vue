@@ -5,9 +5,11 @@ import axios from "axios";
 import { useRouter } from "vue-router";
 import { watch, ref, onMounted, computed, onBeforeMount, onUpdated , nextTick} from "vue";
 import { useUser } from "@/composables/useUser";
+import { formatPostedAt } from "@/utils/Dateutils";
 
 const router = useRouter();
 const userData = localStorage.getItem("user");
+const currentDateTime = new Date().toISOString();
 
 // const { userInfo } = useUser();
 const userCount = ref<number | null>(null);
@@ -28,7 +30,9 @@ watch(userInfo, (newVal, oldVal) => {
 
 const { isLoggedIn, logout } = useAuth();
 
+function formatCurrentDate(datetime:string){
 
+}
 
 async function logoutUser() {
   try {
@@ -86,7 +90,7 @@ getTopicCount();
 <template>
   <div class="flex justify-center items-center flex-col gap-5">
     <div
-      class="bg-[#F6F6EC] shadow-lg border border-gray-300 p-2 rounded-lg flex flex-col justify-center items-center w-[70em] gap-1"
+      class="bg-[#F6F6EC] md:w-[70em]  shadow-lg border border-gray-300 p-2 rounded-lg flex flex-col justify-center items-center w-full gap-1"
     >
       <RouterLink
         :to="{ name: 'Index' }"
@@ -141,8 +145,9 @@ getTopicCount();
 
       <div>
         <span class="font-bold">Stats:</span> {{ userCount }} members, {{ topicCount }}
-        topics <span class="font-bold">Date: </span>Wednesday, 14 August 2024 at
-        10:30 PM
+        topics <span class="font-bold">Date: </span> {{formatPostedAt(currentDateTime)}}
+        <!-- Wednesday, 14 August 2024 at
+        10:30 PM -->
         <span v-if="isLoggedIn"
           ><button
             @click="logoutUser"

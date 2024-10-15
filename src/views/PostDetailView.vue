@@ -298,6 +298,7 @@ function goToEditTopic(topicId:number|undefined) {
       <button @click="likePost" class="text-[#551818] text-xs cursor-pointer hover:underline">({{ likeText ? 'unlike': 'like' }})</button>
       <button v-if="topicData?.author.id == userInfo?.id" @click="goToEditTopic(topicData?.id)" class="text-[#551818] text-xs cursor-pointer hover:underline" >(edit topic)</button>
     </div>
+    <div v-else><span class="text-[#555518] text-xs" v-if="topicData && topicData?.like_count>0">{{ topicData.like_count }}likes</span></div>
     </div>
   </div>
 
