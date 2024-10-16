@@ -106,7 +106,7 @@ getTopicCount();
         <span  class="font-semibold">
           {{ userInfo?.username }}
         </span>
-        <RouterLink class="text-[#181870] hover:underline" to=""> Edit Profile</RouterLink> /<RouterLink class="text-[#181870] hover:underline" to=""> SH </RouterLink
+        <RouterLink class="text-[#181870] hover:underline" :to="{name:'EditUserProfile'}"> Edit Profile</RouterLink> /<RouterLink class="text-[#181870] hover:underline" to=""> SH </RouterLink
         >/<RouterLink class="text-[#181870] hover:underline" to=""> FT </RouterLink>/ <RouterLink class="text-[#181870] hover:underline" to="">FB</RouterLink> /
         <RouterLink class="text-[#181870] hover:underline" to="">L&S </RouterLink>/ <RouterLink class="text-[#181870] hover:underline" to="">MT</RouterLink> /<RouterLink class="text-[#181870] hover:underline" to="">
           FG</RouterLink

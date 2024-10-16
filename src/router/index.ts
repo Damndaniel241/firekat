@@ -76,6 +76,11 @@ export const router = createRouter({
       // props: route => ({userId:route.query.user}),
     },
     {
+      path: "/-/editprofile",
+      name: "EditUserProfile",
+      component: () => import("@/views/EditUserProfileView.vue"),
+    },
+    {
       path: "/-/science",
       name: "Science",
       component: () => import("@/views/ScienceView.vue"),
