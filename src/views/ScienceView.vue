@@ -61,9 +61,9 @@ function goToNewTopic(facultyId:number) {
 <template>
     <Ads />
     <div
-      class="rounded-lg flex flex-col first:border-t-0 last:rounded-b-lg shadow-lg last:border-b-0 bg-[#F6F6EC] border border-gray-300 w-[70em] place-self-center"
+      class="rounded-lg flex flex-col first:border-t-0 last:rounded-b-lg shadow-lg last:border-b-0 bg-[#F6F6EC] border border-gray-300 md:w-[70em] place-self-center mx-1.5"
     >
-    <div class="odd:bg-[#e8ece0] flex justify-center  border border-gray-300  p-2" v-for="subject in subjects" :key="subject.id">
+    <div class="odd:bg-[#e8ece0] md:flex md:justify-center text-center  border border-gray-300  p-2" v-for="subject in subjects" :key="subject.id">
      <RouterLink :to="{name:capitalize(subject.name)}"  class="font-bold text-[#181882] hover:underline">{{ subject.name }} </RouterLink>: {{ subject.description }} (200) topics
     </div>
 </div>
@@ -71,7 +71,7 @@ function goToNewTopic(facultyId:number) {
     <button v-if="isLoggedIn" class="hover:underline text-[#181882] font-medium" @click="goToNewPost(router,2,null)" >(create new topic)</button>
     
     <div
-    class="rounded-lg flex flex-col first:border-t-0 last:rounded-b-lg shadow-lg last:border-b-0 bg-[#F6F6EC] border border-gray-300 w-[70em] place-self-center"
+    class="rounded-lg flex flex-col first:border-t-0 last:rounded-b-lg shadow-lg last:border-b-0 bg-[#F6F6EC] border border-gray-300 md:w-[70em] w-[95%] place-self-center "
   v-if="scienceTopics.length>0"
     >
  

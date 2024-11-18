@@ -62,7 +62,7 @@ async function updateUserProfile() {
 
 <template>
  <div
-      class="first:border-t-0 last:border-b-0 odd:bg-[#e8ece0] rounded-lg bg-[#F6F6EC] border border-gray-300 md:w-[70em] flex flex-col place-self-center sm:w-[90%] w-full"
+      class="first:border-t-0 last:border-b-0 odd:bg-[#e8ece0] rounded-lg bg-[#F6F6EC] border border-gray-300 md:w-[70em] flex flex-col place-self-center  w-[95%]"
     >
 <div class="odd:bg-[#e8ece0] text-center p-2 capitalize">email: eberedaniel241@gmail.com</div>
 <div class="odd:bg-[#e8ece0] text-center p-2 capitalize"><label for="gender-select">gender:</label><select v-model="gender">

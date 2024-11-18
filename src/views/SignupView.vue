@@ -41,7 +41,7 @@ async function register(){
     join firekat
   </div>
   <div
-    class="bg-[#e8ece0] rounded-lg w-[70em] place-self-center flex flex-col border border-gray-300 shadow-lg"
+    class="bg-[#e8ece0] rounded-lg md:w-[70em] w-[95%] place-self-center flex flex-col border border-gray-300 shadow-lg"
   >
     <div
       class="bg-[#F6F6EC] p-2 flex justify-center gap-2 border border-gray-300 rounded-t-lg"

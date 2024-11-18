@@ -262,7 +262,7 @@ function goToEditTopic(topicId:number|undefined) {
   <div v-if="topicData" class="text-center text-2xl capitalize font-bold">{{ topicData.title }} - Firekat</div>
   <Ads />
   <div
-    class="flex flex-col rounded-lg border border-gray-300 shadow-lg w-[70em] place-self-center"
+    class="flex flex-col rounded-lg border border-gray-300 shadow-lg md:w-[70em] place-self-center mx-1.5"
   >
     <div class="bg-[#E8ECE0] p-2 border-b-gray-300 border-b rounded-t-lg">
       <RouterLink
@@ -304,7 +304,7 @@ function goToEditTopic(topicId:number|undefined) {
 
 
   <div
-    class="flex flex-col rounded-lg border border-gray-300 shadow-lg w-[70em] place-self-center"
+    class="flex flex-col rounded-lg border border-gray-300 shadow-lg md:w-[70em] place-self-center mx-1.5"
     v-for="comment in commentsList"
   >
   

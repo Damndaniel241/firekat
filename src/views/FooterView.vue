@@ -3,12 +3,12 @@
 <template>
   <div class="flex justify-center items-center mb-3">
     <div
-      class="bg-[#F6F6EC] shadow-lg border border-gray-300 p-2 rounded-lg flex flex-col justify-center items-center w-[70em] gap-1"
+      class="bg-[#F6F6EC] shadow-lg border border-gray-300 p-2 rounded-lg flex flex-col justify-center items-center mx-1.5 md:w-[70em] gap-1"
     >
       <div class="flex gap-2">
         <input
           type="text"
-          class="rounded-2xl border border-gray-400 w-[500px]"
+          class="rounded-2xl border border-gray-400 md:w-[500px] " 
         />
         <button
           class="bg-white cursor-pointer border text-black border-gray-400 p-1 px-2 rounded-2xl"
@@ -16,7 +16,7 @@
           Search
         </button>
       </div>
-      <div class="">
+      <div class="text-center">
         Sections:
         <RouterLink class="text-[#181870] hover:underline" to=""
           >politics (1)
@@ -58,7 +58,7 @@
           >health
         </RouterLink>
       </div>
-      <div class="">
+      <div class="text-center">
         <RouterLink class="text-[#181870] hover:underline" to=""
           >religion
         </RouterLink>
@@ -84,7 +84,7 @@
           >techmarket
         </RouterLink>
       </div>
-      <div class="">
+      <div class="text-center">
         Links:
         <RouterLink class="text-[#181870] hover:underline" to=""
           >(1)
@@ -117,7 +117,7 @@
           >(10)
         </RouterLink>
       </div>
-      <div class="">
+      <div class="text-center">
         <RouterLink class="font-bold hover:underline" to="">
           Firekat
         </RouterLink>
@@ -131,7 +131,7 @@
         >
         48
       </div>
-      <div class="">
+      <div class="text-center ">
         <span class="font-bold">Disclaimer: </span>
         Every Firekat member is
         <span class="font-bold"> solely responsible </span>

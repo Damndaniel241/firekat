@@ -159,7 +159,7 @@ async function postReplyToComment() {
 </script>
 
 <template>
-  <div class="place-self-center w-[70em] bg-[#E8ECE0] rounded-lg p-3">
+  <div class="place-self-center md:w-[70em] w-[95%] bg-[#E8ECE0] rounded-lg p-3">
     <div v-if="Topic && Topic.content">
     <!-- <p class="text-[#181882] font-bold">{{ Topic.author.username }}:</p> -->
       {{ Topic?.content }}

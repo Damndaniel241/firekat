@@ -48,7 +48,7 @@ getTopics();
   >
 
   <div
-    class="rounded-lg flex flex-col first:border-t-0 last:rounded-b-lg shadow-lg last:border-b-0 bg-[#F6F6EC] border border-gray-300 w-[70em] place-self-center"
+    class="rounded-lg flex flex-col first:border-t-0 last:rounded-b-lg shadow-lg last:border-b-0 bg-[#F6F6EC] border border-gray-300 md:w-[70em] w-[95%] place-self-center"
   v-if="topics.length>0"
     >
   <div

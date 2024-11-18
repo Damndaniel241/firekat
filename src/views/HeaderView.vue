@@ -88,7 +88,7 @@ getTopicCount();
 </script>
 
 <template>
-  <div class="flex justify-center items-center flex-col gap-5">
+  <div class="flex justify-center items-center flex-col gap-5 mx-1.5">
     <div
       class="bg-[#F6F6EC] md:w-[70em]  shadow-lg border border-gray-300 p-2 rounded-lg flex flex-col justify-center items-center w-full gap-1"
     >
@@ -98,7 +98,7 @@ getTopicCount();
       >
         Firekat forum
       </RouterLink>
-      <div v-if="isLoggedIn">
+      <div v-if="isLoggedIn" class="text-center">
         Welcome,
         <!-- <span v-if="userInfo" class="font-semibold"
           ><RouterLink class="hover:underline" :to="{name:'User',params:{username:userInfo.username}}">{{ userInfo?.username }} </RouterLink>
@@ -121,7 +121,7 @@ getTopicCount();
           >New</RouterLink
         >
       </div>
-      <div v-else>
+      <div v-else class="text-center">
         Welcome, <span class="font-semibold">Guest: </span
         ><RouterLink
           :to="{ name: 'Signup' }"
@@ -143,7 +143,7 @@ getTopicCount();
         >
       </div>
 
-      <div>
+      <div class="text-center">
         <span class="font-bold">Stats:</span> {{ userCount }} members, {{ topicCount }}
         topics <span class="font-bold">Date: </span> {{formatPostedAt(currentDateTime)}}
         <!-- Wednesday, 14 August 2024 at
@@ -157,13 +157,13 @@ getTopicCount();
           </button></span
         >
       </div>
-      <div class="flex gap-2">
+      <div class="flex gap-2 ">
         <input
           type="text"
-          class="rounded-2xl border border-gray-400 w-[500px]"
+          class="rounded-2xl border border-gray-400 md:w-[500px] sm:w-[400px]"
         />
         <button
-          class="bg-white cursor-pointer border text-black border-gray-400 p-1 px-2 rounded-2xl"
+          class="bg-white cursor-pointer border text-black border-gray-400 p-1 px-2 rounded-2xl "
         >
           Search
         </button>
