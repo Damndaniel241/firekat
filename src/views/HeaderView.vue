@@ -90,7 +90,7 @@ getTopicCount();
 <template>
   <div class="flex justify-center items-center flex-col gap-5 mx-1.5">
     <div
-      class="bg-[#F6F6EC] md:w-[70em]  shadow-lg border border-gray-300 p-2 rounded-lg flex flex-col justify-center items-center w-full gap-1"
+      class="bg-[#F6F6EC] lg:w-[70em] md:mx-1.5   shadow-lg border border-gray-300 p-2 rounded-lg flex flex-col justify-center items-center w-full gap-1"
     >
       <RouterLink
         :to="{ name: 'Index' }"
