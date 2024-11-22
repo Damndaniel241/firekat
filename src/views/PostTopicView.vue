@@ -147,7 +147,7 @@ onUnmounted(() => {
   <div class="font-bold text-3xl place-self-center">
     New Topic - Firekat / General, Firekat Forum
   </div>
-  <div class="place-self-center md:w-[70em] w-[95%] bg-[#E8ECE0] rounded-lg p-3">
+  <div class="place-self-center lg:w-[70em] md:w-[99%] w-[95%] bg-[#E8ECE0] rounded-lg p-3">
     <div class="flex flex-col">
         <label for="">title</label>
       <input type="text" class="rounded-xl" v-model="title"/>
