@@ -15,7 +15,19 @@ const currentDateTime = new Date().toISOString();
 const userCount = ref<number | null>(null);
 const topicCount = ref<number | null>(null);
 
+
 const { userInfo } = useUser();
+
+const queryString = ref<string>("");
+
+function takeToSearch(){
+  router.push(
+    {path:"/-/search",
+    query:{q:queryString.value},
+  }
+  );
+  
+}
 
 
 watch(userInfo, (newVal, oldVal) => {
@@ -159,11 +171,13 @@ getTopicCount();
       </div>
       <div class="flex gap-2 ">
         <input
+        v-model="queryString"
           type="text"
           class="rounded-2xl border border-gray-400 md:w-[500px] sm:w-[400px]"
         />
         <button
           class="bg-white cursor-pointer border text-black border-gray-400 p-1 px-2 rounded-2xl "
+          @click="takeToSearch"
         >
           Search
         </button>

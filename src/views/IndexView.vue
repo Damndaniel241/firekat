@@ -41,7 +41,7 @@ console.log(contents);
 <template>
   
     <div
-      class="first:border-t-0 last:border-b-0 odd:bg-[#e8ece0] rounded-lg bg-[#F6F6EC] border border-gray-300 md:w-[99%] lg:w-[70em]  flex flex-col place-self-center sm:w-[90%] mx-1.5 "
+      class="first:border-t-0 last:border-b-0 odd:bg-[#e8ece0] rounded-lg bg-[#F6F6EC] border border-gray-300 md:w-[99%] lg:w-[70em]  flex flex-col place-self-center  mx-1.5 "
     >
       <div
         class="odd:bg-[#e8ece0] border-b rounded-t-lg border-b-gray-300 flex justify-center sm:text-xl font-bold uppercase p-2 w-full text-lg  "
@@ -109,7 +109,7 @@ console.log(contents);
     </div>
     <Ads />
     <div
-      class="rounded-lg flex flex-col first:border-t-0 last:rounded-b-lg shadow-lg last:border-b-0 odd:bg-[#e8ece0] bg-[#F6F6EC] border border-gray-300 place-self-center md:w-[99%] lg:w-[70em] sm:w-[90%] mx-1.5"
+      class="rounded-lg flex flex-col first:border-t-0 last:rounded-b-lg shadow-lg last:border-b-0 odd:bg-[#e8ece0] bg-[#F6F6EC] border border-gray-300 place-self-center md:w-[99%] lg:w-[70em]  mx-1.5"
     >
       <div class="flex justify-center items-center p-2 text-center">
         <RouterLink :to="{name:'Index'}" class="font-semibold text-[#181882] hover:underline"

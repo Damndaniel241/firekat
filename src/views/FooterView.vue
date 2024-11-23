@@ -1,4 +1,20 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+
+
+const router=useRouter();
+
+const queryString = ref<string>("");
+
+function takeToSearch(){
+  router.push(
+    {path:"/-/search",
+    query:{q:queryString.value},
+  }
+  );
+}
+</script>
 
 <template>
   <div class="flex justify-center items-center mb-3">
@@ -7,11 +23,13 @@
     >
       <div class="flex gap-2">
         <input
+        v-model="queryString"
           type="text"
           class="rounded-2xl border border-gray-400 md:w-[500px] " 
         />
         <button
           class="bg-white cursor-pointer border text-black border-gray-400 p-1 px-2 rounded-2xl"
+          @click="takeToSearch"
         >
           Search
         </button>

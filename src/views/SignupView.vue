@@ -6,10 +6,39 @@ import { useRouter } from 'vue-router';
 const username = ref<string>("");
 const email = ref<string>("");
 const password = ref<string>("");
-  const router = useRouter();
+const router = useRouter();
+const error = ref<boolean>(false);
+const errorMessage  = ref<string>("");
+
+
+function validateForm(input:string){
+  if (input.trim() == ""){
+    error.value = true;
+    errorMessage.value = "fill in all spaces"
+
+    setTimeout(()=>{
+      error.value = false;
+    },5000)
+    return error.value;
+  }
+}
 
 
 async function register(){
+ 
+  for(let item of [username.value,email.value,password.value]){
+    validateForm(item);
+    if (!validateForm(item)){
+      console.log("it was wrong");
+      
+        return;
+    }
+  }
+  // validateForm(username.value);
+  // validateForm(email.value);
+  // validateForm(password.value);
+
+
     const formData = {
         username:username.value,
         email:email.value,
@@ -40,8 +69,10 @@ async function register(){
   >
     join firekat
   </div>
+
+  <div v-if="error" class="text-2xl text-center text-red-600">{{ errorMessage }}</div>
   <div
-    class="bg-[#e8ece0] rounded-lg md:w-[70em] w-[95%] place-self-center flex flex-col border border-gray-300 shadow-lg"
+    class="bg-[#e8ece0] rounded-lg lg:w-[70em] md:w[99%] w-[95%] place-self-center flex flex-col border border-gray-300 shadow-lg"
   >
     <div
       class="bg-[#F6F6EC] p-2 flex justify-center gap-2 border border-gray-300 rounded-t-lg"

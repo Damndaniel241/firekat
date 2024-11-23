@@ -100,7 +100,7 @@ export type TopicscommentSchema =
     comment_like_status: boolean |null;
     comment_like_count:number;
 
-    topic: number;
+    topic: TopicSchema;
     posted_at: string;
     quoted_comment: {
       content: string;
@@ -108,7 +108,7 @@ export type TopicscommentSchema =
       posted_at: string;
       quoted_comment: number|null;
       quoted_topic: number|null;
-      topic: number;
+      topic: TopicSchema;
       user: {
         id: number;
         username: string;

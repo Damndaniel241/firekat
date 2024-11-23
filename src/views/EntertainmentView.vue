@@ -65,7 +65,7 @@ console.log(subjects)
 <template>
     <Ads />
     <div
-      class="rounded-lg flex flex-col first:border-t-0 last:rounded-b-lg shadow-lg last:border-b-0 bg-[#F6F6EC] border border-gray-300 md:w-[70em] mx-1.5  place-self-center"
+      class="rounded-lg flex flex-col first:border-t-0 last:rounded-b-lg shadow-lg last:border-b-0 bg-[#F6F6EC] border border-gray-300 lg:w-[70em] md:w-[99%] mx-1.5  place-self-center"
     >
     <div class="odd:bg-[#e8ece0] md:flex md:justify-center text-center border border-gray-300  p-2" v-for="subject in subjects" :key="subject.id">
      <RouterLink :to="{name:capitalize(subject.name)}"  class="font-bold text-[#181882] hover:underline">{{ subject.name }} </RouterLink>: {{ subject.description }} (200) topics
@@ -84,7 +84,7 @@ console.log(subjects)
   <button v-if="isLoggedIn" class="hover:underline text-[#181882] font-medium" @click="goToNewPost(router,3,null)" >(create new topic)</button>
 
   <div
-    class="rounded-lg flex flex-col first:border-t-0 last:rounded-b-lg shadow-lg last:border-b-0 bg-[#F6F6EC] border border-gray-300 md:w-[70em] mx-1.5 place-self-center"
+    class="rounded-lg flex flex-col first:border-t-0 last:rounded-b-lg shadow-lg last:border-b-0 bg-[#F6F6EC] border border-gray-300 lg:w-[70em] md:w-[99%] mx-1.5 place-self-center"
   v-if="entertainmentTopics.length>0"
     >
  

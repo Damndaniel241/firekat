@@ -83,7 +83,7 @@ console.log(generalTopics);
 
   
   <div
-    class="rounded-lg flex flex-col first:border-t-0 last:rounded-b-lg shadow-lg last:border-b-0 bg-[#F6F6EC] border border-gray-300 md:w-[70em] mx-1.5 place-self-center"
+    class="rounded-lg flex flex-col first:border-t-0 last:rounded-b-lg shadow-lg last:border-b-0 bg-[#F6F6EC] border border-gray-300 lg:w-[70em] md:w-[99%] mx-1.5 place-self-center"
     v-if="subjects.length>0"
   >
   
@@ -104,7 +104,7 @@ console.log(generalTopics);
     <RouterLink v-else class="hover:underline text-[#181882] font-medium" :to="{name:'Login'}">(create new topic)</RouterLink>
   </div>
   <div
-    class="rounded-lg flex flex-col first:border-t-0 last:rounded-b-lg shadow-lg last:border-b-0 bg-[#F6F6EC] border border-gray-300 md:w-[70em] mx-1.5 place-self-center"
+    class="rounded-lg flex flex-col first:border-t-0 last:rounded-b-lg shadow-lg last:border-b-0 bg-[#F6F6EC] border border-gray-300 lg:w-[70em] md:w-[99%] mx-1.5 place-self-center"
   v-if="generalTopics.length>0"
     >
  

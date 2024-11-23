@@ -55,7 +55,7 @@ async function loginUser() {
 <template>
     <div class="text-3xl flex justify-center font-bold place-self-center capitalize">login to firekat</div>
   <div
-    class="bg-[#e8ece0] rounded-lg md:w-[70em] w-[95%]  place-self-center flex flex-col border-gray-300 shadow-lg"
+    class="bg-[#e8ece0] rounded-lg lg:w-[70em] md:w[99%] w-[95%]  place-self-center flex flex-col border-gray-300 shadow-lg"
   >
 
   <div v-if="error" class="text-red-500 text-2xl text-center">
