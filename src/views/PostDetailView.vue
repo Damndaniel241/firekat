@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import HeaderView from "./HeaderView.vue";
+// import HeaderView from "./HeaderView.vue";
 import Ads from "@/components/Ads.vue";
 import { useRoute, useRouter } from "vue-router";
-import { computed, onMounted, ref,watch } from "vue";
-import postpic from "@/assets/files.png";
-import FooterView from "./FooterView.vue";
-import { contents } from "@/Fakedb";
+import { computed, ref,} from "vue";
+// import postpic from "@/assets/files.png";
+// import FooterView from "./FooterView.vue";
+// import { contents } from "@/Fakedb";
 import axios from "axios";
 import { TopicSchema, TopicscommentSchema,LikeStatusSchema, CommentSchema } from "@/schemas/schemas";
 import { useAuth } from "@/composables/useAuth";
@@ -128,6 +128,8 @@ async function likeComment(commentID:number){
         },
       }
     );
+    // console.log(response);
+    
     console.log(commentLikeData);
     const comment = commentsList.value.find((c)=>c.id===commentID);
     if (comment){

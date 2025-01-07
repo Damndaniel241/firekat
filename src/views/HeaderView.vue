@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useAuthStore } from "@/stores/auth";
+// import { useAuthStore } from "@/stores/auth";
 import { useAuth } from "@/composables/useAuth";
 import axios from "axios";
 import { useRouter } from "vue-router";
-import { watch, ref, onMounted, computed, onBeforeMount, onUpdated , nextTick} from "vue";
+import { watch, ref} from "vue";
 import { useUser } from "@/composables/useUser";
 import { formatPostedAt } from "@/utils/Dateutils";
 
@@ -30,7 +30,7 @@ function takeToSearch(){
 }
 
 
-watch(userInfo, (newVal, oldVal) => {
+watch(userInfo, (newVal) => {
   if (newVal) {
     console.log("User info updated:", newVal);
     // router.push({name:"Index"});
@@ -42,9 +42,7 @@ watch(userInfo, (newVal, oldVal) => {
 
 const { isLoggedIn, logout } = useAuth();
 
-function formatCurrentDate(datetime:string){
 
-}
 
 async function logoutUser() {
   try {
@@ -62,6 +60,9 @@ async function logoutUser() {
         },
       }
     );
+
+    // console.log(response);
+    
 
     logout();
 
