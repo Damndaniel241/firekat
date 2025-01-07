@@ -90,7 +90,7 @@ const getStyledContent = (content:string) => {
         <span v-for="(part, index) in getStyledContent(post?.content)" :key="index">
           <span
             v-if="part.isHighlighted"
-            class="bg-yellow-200 font-bold text-black"
+            class="bg-[#FFFF00] font-bold text-black"
           >
             {{ part.text }}
           </span>

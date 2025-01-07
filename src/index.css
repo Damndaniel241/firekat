@@ -6,7 +6,7 @@ html,
 body,
 #app {
   height: 100%;
-  @apply text-base cursor-default select-none;
+  @apply text-base cursor-default ;
 }
 
 button {

@@ -4,6 +4,7 @@ export type Generalschema = [
     description: string;
     faculty: number;
     id: number;
+    topics_count:number;
   }
 ];
 
@@ -70,6 +71,7 @@ export type ScienceSchema = [
     description: string;
     faculty: number;
     id: number;
+    topics_count:number;
   }
 ];
 
@@ -79,6 +81,7 @@ export type EntertainmentSchema = [
     description: string;
     faculty: number;
     id: number;
+    topics_count:number;
   }
 ];
 

@@ -68,7 +68,7 @@ console.log(subjects)
       class="rounded-lg flex flex-col first:border-t-0 last:rounded-b-lg shadow-lg last:border-b-0 bg-[#F6F6EC] border border-gray-300 lg:w-[70em] md:w-[99%] mx-1.5  place-self-center"
     >
     <div class="odd:bg-[#e8ece0] md:flex md:justify-center text-center border border-gray-300  p-2" v-for="subject in subjects" :key="subject.id">
-     <RouterLink :to="{name:capitalize(subject.name)}"  class="font-bold text-[#181882] hover:underline">{{ subject.name }} </RouterLink>: {{ subject.description }} (200) topics
+     <RouterLink :to="{name:capitalize(subject.name)}"  class="font-bold text-[#181882] hover:underline">{{ subject.name }} </RouterLink>: {{ subject.description }} ({{ subject.topics_count }}) topics
     </div>
 
     <!-- <Ads/> -->
@@ -93,7 +93,7 @@ console.log(subjects)
       v-for="topic in entertainmentTopics"
       :key="topic.id"
     >
-      <RouterLink :to="{name:'PostDetail',params:{topicId:topic.id,topicSlug:topic.slug}}" class="font-bold text-[#181882] hover:underline"
+      <RouterLink :to="{name:'PostDetail',params:{topicId:topic.id,topicSlug:topic.slug}}" class="font-bold text-[#181882] hover:underline text-center"
         >{{ topic?.title }}</RouterLink
       >
       <div class="text-sm text-[#555518]">
