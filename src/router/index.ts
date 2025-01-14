@@ -286,6 +286,11 @@ export const router = createRouter({
       name: "Webmasters",
       component: () => import("@/falculties/science/Webmasters.vue"),
     },
+    {
+      path: "/-/new-branch",
+      name: "NewBranch",
+      component: () => import("@/views/NewBranchView.vue"),
+    },
 
     
   ],
